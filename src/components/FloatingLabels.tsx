@@ -26,14 +26,14 @@ export const FloatingLabelInput: React.FC<FloatingLabelInputProps> = ({
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         required={required}
-        className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kasturi-gold focus:border-transparent transition-all duration-300 transform focus:scale-105 peer placeholder-transparent"
+        className="form-input w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 bg-white peer placeholder-transparent text-gray-900"
         placeholder={label}
       />
       <label
-        className={`absolute left-4 transition-all duration-300 pointer-events-none ${
+        className={`floating-label absolute left-4 transition-all duration-300 pointer-events-none text-gray-500 ${
           isFocused || value
-            ? '-top-2 text-sm text-kasturi-gold bg-white px-2'
-            : 'top-4 text-gray-500'
+            ? '-top-2 text-sm text-amber-600 bg-white px-2 font-medium'
+            : 'top-4 text-base'
         }`}
       >
         {label}
@@ -65,14 +65,14 @@ export const FloatingLabelTextarea: React.FC<FloatingLabelTextareaProps> = ({
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         rows={rows}
-        className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kasturi-gold focus:border-transparent transition-all duration-300 transform focus:scale-105 peer placeholder-transparent resize-none"
+        className="form-input w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 bg-white peer placeholder-transparent resize-none text-gray-900"
         placeholder={label}
       />
       <label
-        className={`absolute left-4 transition-all duration-300 pointer-events-none ${
+        className={`floating-label absolute left-4 transition-all duration-300 pointer-events-none text-gray-500 ${
           isFocused || value
-            ? '-top-2 text-sm text-kasturi-gold bg-white px-2'
-            : 'top-4 text-gray-500'
+            ? '-top-2 text-sm text-amber-600 bg-white px-2 font-medium'
+            : 'top-4 text-base'
         }`}
       >
         {label}

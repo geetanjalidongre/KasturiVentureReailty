@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
-import { ChevronDown, Phone, Mail, MapPin, Home, Building, Users, Award, ArrowRight, Star, CheckCircle, MessageCircle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { 
+  ChevronDown, Phone, Mail, MapPin, Home, Building, Users, Award, 
+  ArrowRight, Star, CheckCircle, MessageCircle, Menu, X, Play, Pause,
+  ChevronLeft, ChevronRight, Search, Filter, Eye, Heart, Share2
+} from 'lucide-react';
 import { AnimatedSection } from './components/AnimatedSection';
 import { PropertyCard } from './components/PropertyCard';
 import { AnimatedCounter } from './components/AnimatedCounter';
@@ -10,7 +14,9 @@ import { TestimonialSlider } from './components/TestimonialSlider';
 import { emailEnquiryService } from './lib/supabase';
 
 function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeProperty, setActiveProperty] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [contactForm, setContactForm] = useState({
     firstName: '',
     lastName: '',
@@ -28,7 +34,6 @@ I am interested in learning more about your properties. Please contact me with m
 
 Best regards`);
     
-    // Track email enquiry in database
     emailEnquiryService.submitEmailEnquiry({
       sender_name: 'Website Visitor',
       sender_email: 'visitor@example.com',
@@ -43,7 +48,6 @@ Best regards`);
   const handleWhatsAppInquiry = () => {
     const message = encodeURIComponent('Hi Manoj, I am interested in your properties. Can you please share more details?');
     
-    // Track WhatsApp enquiry in database
     emailEnquiryService.submitEmailEnquiry({
       sender_name: 'Website Visitor',
       sender_email: 'visitor@example.com',
@@ -58,117 +62,176 @@ Best regards`);
   const properties = [
     {
       id: 1,
-      title: "Luxury Villa - Green Valley",
+      title: "Royal Gardens Villa",
       price: "₹2.5 Cr",
       location: "Banjara Hills, Hyderabad",
       beds: 4,
       baths: 3,
       sqft: "3,500",
       image: "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg",
-      type: "Villa"
+      type: "Villa",
+      featured: true
     },
     {
       id: 2,
-      title: "Premium Apartments - Skyline",
+      title: "Skyline Residences",
       price: "₹85 L - 1.2 Cr",
       location: "Gachibowli, Hyderabad",
       beds: "2-3",
       baths: "2-3",
       sqft: "1,200-1,800",
       image: "https://images.pexels.com/photos/439391/pexels-photo-439391.jpeg",
-      type: "Apartment"
+      type: "Apartment",
+      featured: true
     },
     {
       id: 3,
-      title: "Commercial Complex - Tech Hub",
+      title: "Tech Hub Complex",
       price: "₹5-50 L",
       location: "HITEC City, Hyderabad",
       beds: "Office",
       baths: "Common",
       sqft: "500-5,000",
       image: "https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg",
-      type: "Commercial"
+      type: "Commercial",
+      featured: true
     },
     {
       id: 4,
-      title: "Garden Homes - Serene Living",
+      title: "Serene Homes",
       price: "₹1.8 Cr",
       location: "Kompally, Hyderabad",
       beds: 3,
       baths: 2,
       sqft: "2,800",
       image: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg",
-      type: "Villa"
+      type: "Villa",
+      featured: false
     }
   ];
 
-  const featuredProperties = properties.slice(0, 3);
+  const featuredProperties = properties.filter(p => p.featured);
 
   const services = [
     {
-      icon: <Home className="w-8 h-8" />,
-      title: "Residential Properties",
-      description: "Luxury villas, apartments, and independent houses designed for modern living."
+      icon: <Home className="w-12 h-12" />,
+      title: "Luxury Residences",
+      description: "Premium villas and apartments crafted for sophisticated living with world-class amenities.",
+      features: ["Premium Locations", "Modern Architecture", "Smart Home Features"]
     },
     {
-      icon: <Building className="w-8 h-8" />,
+      icon: <Building className="w-12 h-12" />,
       title: "Commercial Spaces",
-      description: "Premium office spaces, retail outlets, and commercial complexes in prime locations."
+      description: "Strategic commercial properties in prime business districts with excellent connectivity.",
+      features: ["Prime Locations", "High ROI", "Professional Management"]
     },
     {
-      icon: <Users className="w-8 h-8" />,
+      icon: <Users className="w-12 h-12" />,
       title: "Property Management",
-      description: "Complete property management services including maintenance, leasing, and tenant relations."
+      description: "Comprehensive property management services ensuring maximum returns on your investment.",
+      features: ["Tenant Management", "Maintenance", "Legal Support"]
     },
     {
-      icon: <Award className="w-8 h-8" />,
+      icon: <Award className="w-12 h-12" />,
       title: "Investment Advisory",
-      description: "Expert guidance on real estate investments and portfolio diversification strategies."
+      description: "Expert guidance on real estate investments with market insights and portfolio optimization.",
+      features: ["Market Analysis", "Portfolio Planning", "Risk Assessment"]
     }
   ];
 
   const testimonials = [
     {
       name: "Rajesh Kumar",
-      role: "Property Owner",
-      content: "Kasturi helped us find our dream home. Their attention to detail and customer service is exceptional.",
-      rating: 5
+      role: "Villa Owner",
+      content: "Kasturi transformed our dream into reality. The attention to detail and premium quality exceeded our expectations. Manoj's personal involvement made all the difference.",
+      rating: 5,
+      image: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg"
     },
     {
       name: "Priya Sharma",
-      role: "Investor",
-      content: "Professional team with deep market knowledge. They made my commercial property investment seamless.",
-      rating: 5
+      role: "Commercial Investor",
+      content: "Outstanding investment returns and professional service. Their market knowledge helped me make the right investment decisions. Highly recommended for serious investors.",
+      rating: 5,
+      image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg"
     },
     {
       name: "Amit Patel",
-      role: "Home Buyer",
-      content: "Transparent dealings and quality construction. Highly recommend Kasturi for luxury properties.",
-      rating: 5
+      role: "Apartment Owner",
+      content: "Transparent dealings and exceptional quality. The apartment we purchased is exactly as promised. Great location and beautiful construction quality.",
+      rating: 5,
+      image: "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-amber-50">
       {/* Navigation */}
-      <nav className="bg-white shadow-lg fixed w-full top-0 z-50">
+      <nav className="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-md shadow-lg border-b border-amber-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <img 
-                src="/kasturi logo 2.jpg" 
-                alt="Kasturi Reality Venture" 
-                className="h-12 w-auto"
-              />
+          <div className="flex justify-between items-center h-20">
+            <div className="flex items-center space-x-4">
+              <div className="relative">
+                <img 
+                  src="/kasturi logo 2.jpg" 
+                  alt="Kasturi Reality Venture" 
+                  className="h-16 w-auto rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-400/20 to-yellow-400/20 rounded-lg animate-pulse"></div>
+              </div>
+              <div className="hidden md:block">
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">
+                  Kasturi Reality Venture
+                </h1>
+                <p className="text-sm text-gray-600">Premium Real Estate Solutions</p>
+              </div>
             </div>
-            <div className="hidden md:flex space-x-8">
-              <a href="#home" className="text-gray-800 hover:text-kasturi-gold transition-colors font-medium">Home</a>
-              <a href="#properties" className="text-gray-800 hover:text-kasturi-gold transition-colors font-medium">Properties</a>
-              <a href="#services" className="text-gray-800 hover:text-kasturi-gold transition-colors font-medium">Services</a>
-              <a href="#about" className="text-gray-800 hover:text-kasturi-gold transition-colors font-medium">About</a>
-              <a href="#contact" className="text-gray-800 hover:text-kasturi-gold transition-colors font-medium">Contact</a>
+            
+            <div className="hidden lg:flex space-x-8">
+              <a href="#home" className="nav-link text-gray-800 hover:text-amber-600 transition-all duration-300 font-medium relative group">
+                Home
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-600 transition-all duration-300 group-hover:w-full"></span>
+              </a>
+              <a href="#properties" className="nav-link text-gray-800 hover:text-amber-600 transition-all duration-300 font-medium relative group">
+                Properties
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-600 transition-all duration-300 group-hover:w-full"></span>
+              </a>
+              <a href="#services" className="nav-link text-gray-800 hover:text-amber-600 transition-all duration-300 font-medium relative group">
+                Services
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-600 transition-all duration-300 group-hover:w-full"></span>
+              </a>
+              <a href="#about" className="nav-link text-gray-800 hover:text-amber-600 transition-all duration-300 font-medium relative group">
+                About
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-600 transition-all duration-300 group-hover:w-full"></span>
+              </a>
+              <a href="#contact" className="nav-link text-gray-800 hover:text-amber-600 transition-all duration-300 font-medium relative group">
+                Contact
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-600 transition-all duration-300 group-hover:w-full"></span>
+              </a>
             </div>
-            <button className="bg-kasturi-gold text-white px-4 py-2 rounded-lg hover:bg-kasturi-gold-dark transition-colors font-medium">
+            
+            <div className="flex items-center space-x-4">
+              <button className="hidden md:block bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-6 py-3 rounded-full hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 font-medium shadow-lg hover:shadow-xl transform hover:scale-105">
+                Get Quote
+              </button>
+              <button 
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              >
+                {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        {/* Mobile Menu */}
+        <div className={`lg:hidden transition-all duration-300 ${isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden bg-white border-t border-gray-200`}>
+          <div className="px-4 py-6 space-y-4">
+            <a href="#home" className="block text-gray-800 hover:text-amber-600 transition-colors font-medium">Home</a>
+            <a href="#properties" className="block text-gray-800 hover:text-amber-600 transition-colors font-medium">Properties</a>
+            <a href="#services" className="block text-gray-800 hover:text-amber-600 transition-colors font-medium">Services</a>
+            <a href="#about" className="block text-gray-800 hover:text-amber-600 transition-colors font-medium">About</a>
+            <a href="#contact" className="block text-gray-800 hover:text-amber-600 transition-colors font-medium">Contact</a>
+            <button className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-6 py-3 rounded-full font-medium">
               Get Quote
             </button>
           </div>
@@ -176,102 +239,142 @@ Best regards`);
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="relative bg-gradient-to-br from-yellow-50 to-amber-100 pt-20 pb-16 overflow-hidden hero-section">
-        <div className="absolute inset-0 bg-black opacity-5"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
-            <div className="space-y-8 hero-content">
-              <div className="space-y-4">
-                <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight hero-title">
-                  Your Dream 
-                  <span className="text-kasturi-gold block">Property Awaits</span>
-                </h1>
-                <p className="text-xl text-gray-700 leading-relaxed hero-subtitle">
-                  Discover luxury living with Kasturi Reality Venture. We create premium residential and commercial spaces that blend modern design with sustainable living.
-                </p>
-                <button className="border-2 border-kasturi-gold text-kasturi-gold px-8 py-4 rounded-lg hover:bg-kasturi-gold hover:text-white transition-all duration-300 font-medium text-lg">
-                  Schedule Visit
-                </button>
+      <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        {/* Animated Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23f59e0b" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] animate-pulse"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <AnimatedSection className="space-y-8" animation="slideRight">
+              <div className="space-y-6">
+                <div className="inline-flex items-center px-4 py-2 bg-amber-100 rounded-full text-amber-800 text-sm font-medium animate-bounce">
+                  <Star className="w-4 h-4 mr-2 fill-current" />
+                  Premium Real Estate Since 2019
+                </div>
                 
-                <div className="flex space-x-4 mt-4">
-                  <button 
-                    onClick={handleEmailInquiry}
-                    className="flex items-center space-x-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 font-medium"
-                  >
-                    <Mail className="w-5 h-5" />
-                    <span>Email Inquiry</span>
+                <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
+                  <span className="block text-gray-900">Discover Your</span>
+                  <span className="block bg-gradient-to-r from-amber-600 via-yellow-600 to-orange-600 bg-clip-text text-transparent animate-gradient">
+                    Dream Property
+                  </span>
+                </h1>
+                
+                <p className="text-xl lg:text-2xl text-gray-700 leading-relaxed max-w-2xl">
+                  Experience luxury living with Kasturi Reality Venture. We create exceptional residential and commercial spaces that blend modern elegance with timeless sophistication.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                  <button className="group bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-8 py-4 rounded-full hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 font-semibold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 flex items-center justify-center">
+                    Explore Properties
+                    <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </button>
                   
-                  <button 
-                    onClick={handleWhatsAppInquiry}
-                    className="flex items-center space-x-2 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-all duration-300 font-medium"
-                  >
-                    <MessageCircle className="w-5 h-5" />
-                    <span>WhatsApp</span>
-                  </button>
+                  <div className="flex space-x-3">
+                    <button 
+                      onClick={handleEmailInquiry}
+                      className="flex items-center space-x-2 bg-blue-600 text-white px-6 py-4 rounded-full hover:bg-blue-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105"
+                    >
+                      <Mail className="w-5 h-5" />
+                      <span>Email Us</span>
+                    </button>
+                    
+                    <button 
+                      onClick={handleWhatsAppInquiry}
+                      className="flex items-center space-x-2 bg-green-600 text-white px-6 py-4 rounded-full hover:bg-green-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105"
+                    >
+                      <MessageCircle className="w-5 h-5" />
+                      <span>WhatsApp</span>
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-8 pt-8 hero-stats">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-gray-900"><AnimatedCounter end={500} suffix="+" /></div>
-                  <div className="text-gray-600">Properties Sold</div>
+              <div className="grid grid-cols-3 gap-8 pt-12">
+                <div className="text-center group">
+                  <div className="text-4xl font-bold text-gray-900 mb-2">
+                    <AnimatedCounter end={500} suffix="+" />
+                  </div>
+                  <div className="text-gray-600 font-medium">Properties Sold</div>
+                  <div className="w-12 h-1 bg-gradient-to-r from-amber-400 to-yellow-400 mx-auto mt-2 rounded-full group-hover:w-16 transition-all duration-300"></div>
                 </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-gray-900"><AnimatedCounter end={5} suffix="+" /></div>
-                  <div className="text-gray-600">Years Experience</div>
+                <div className="text-center group">
+                  <div className="text-4xl font-bold text-gray-900 mb-2">
+                    <AnimatedCounter end={5} suffix="+" />
+                  </div>
+                  <div className="text-gray-600 font-medium">Years Experience</div>
+                  <div className="w-12 h-1 bg-gradient-to-r from-amber-400 to-yellow-400 mx-auto mt-2 rounded-full group-hover:w-16 transition-all duration-300"></div>
                 </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-gray-900"><AnimatedCounter end={100} suffix="%" /></div>
-                  <div className="text-gray-600">Client Satisfaction</div>
+                <div className="text-center group">
+                  <div className="text-4xl font-bold text-gray-900 mb-2">
+                    <AnimatedCounter end={100} suffix="%" />
+                  </div>
+                  <div className="text-gray-600 font-medium">Client Satisfaction</div>
+                  <div className="w-12 h-1 bg-gradient-to-r from-amber-400 to-yellow-400 mx-auto mt-2 rounded-full group-hover:w-16 transition-all duration-300"></div>
                 </div>
               </div>
-            </div>
+            </AnimatedSection>
             
-            <div className="relative hero-image">
-              <div className="relative z-10 bg-white rounded-2xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-500">
-                <img 
-                  src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg" 
-                  alt="Luxury Property" 
-                  className="w-full h-80 object-cover rounded-xl"
-                />
-                <div className="absolute -bottom-4 -right-4 bg-kasturi-gold text-white p-6 rounded-xl shadow-lg price-badge">
-                  <div className="text-2xl font-bold">₹2.5 Cr</div>
-                  <div className="text-sm opacity-90">Premium Villa</div>
+            <AnimatedSection className="relative" animation="slideLeft" delay={200}>
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-400/20 to-yellow-400/20 rounded-3xl transform rotate-6 animate-pulse"></div>
+                <div className="relative bg-white rounded-3xl shadow-2xl p-2 transform hover:rotate-0 transition-transform duration-700">
+                  <img 
+                    src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg" 
+                    alt="Luxury Property" 
+                    className="w-full h-96 lg:h-[500px] object-cover rounded-2xl"
+                  />
+                  <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-lg">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                      <span className="text-sm font-semibold text-gray-800">Available Now</span>
+                    </div>
+                  </div>
+                  <div className="absolute bottom-6 right-6 bg-gradient-to-r from-amber-500 to-yellow-500 text-white p-6 rounded-2xl shadow-xl transform hover:scale-110 transition-transform duration-300">
+                    <div className="text-2xl font-bold">₹2.5 Cr</div>
+                    <div className="text-sm opacity-90">Premium Villa</div>
+                  </div>
+                </div>
+                
+                {/* Floating Elements */}
+                <div className="absolute -top-4 -right-4 bg-white rounded-full p-4 shadow-lg animate-bounce">
+                  <Heart className="w-6 h-6 text-red-500" />
+                </div>
+                <div className="absolute -bottom-4 -left-4 bg-white rounded-full p-4 shadow-lg animate-bounce" style={{animationDelay: '1s'}}>
+                  <Eye className="w-6 h-6 text-blue-500" />
                 </div>
               </div>
-              <div className="absolute top-8 left-8 bg-white rounded-xl shadow-lg p-4 z-20">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-sm font-medium">Available Now</span>
-                </div>
-              </div>
-            </div>
+            </AnimatedSection>
           </div>
         </div>
       </section>
 
       {/* Properties Section */}
-      <section id="properties" className="py-20 bg-gray-50">
+      <section id="properties" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Featured Properties</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Explore our carefully curated collection of premium properties, each designed to offer the perfect blend of luxury, comfort, and modern amenities.
+          <AnimatedSection className="text-center mb-20">
+            <div className="inline-flex items-center px-4 py-2 bg-amber-100 rounded-full text-amber-800 text-sm font-medium mb-6">
+              <Building className="w-4 h-4 mr-2" />
+              Featured Properties
+            </div>
+            <h2 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
+              Exceptional <span className="bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">Properties</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Discover our carefully curated collection of premium properties, each designed to offer the perfect blend of luxury, comfort, and modern sophistication.
             </p>
           </AnimatedSection>
           
-          {/* Property Carousel */}
-          <AnimatedSection className="mb-12" delay={200}>
+          <AnimatedSection className="mb-16" delay={200}>
             <PropertyCarousel properties={featuredProperties} />
           </AnimatedSection>
           
-          {/* Filter Panel */}
           <AnimatedSection delay={300}>
             <FilterPanel />
           </AnimatedSection>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
             {properties.map((property, index) => (
               <AnimatedSection key={property.id} delay={index * 100} animation="fadeUp">
                 <PropertyCard property={property} index={index} />
@@ -279,8 +382,8 @@ Best regards`);
             ))}
           </div>
           
-          <AnimatedSection className="text-center mt-12" delay={400}>
-            <button className="border-2 border-kasturi-gold text-kasturi-gold px-8 py-3 rounded-lg hover:bg-kasturi-gold hover:text-white transition-colors font-medium">
+          <AnimatedSection className="text-center mt-16" delay={400}>
+            <button className="bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-8 py-4 rounded-full hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105">
               View All Properties
             </button>
           </AnimatedSection>
@@ -288,24 +391,48 @@ Best regards`);
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-20 bg-white">
+      <section id="services" className="py-24 bg-gradient-to-br from-gray-50 to-amber-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Services</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              From property development to investment advisory, we provide comprehensive real estate solutions tailored to your needs.
+          <AnimatedSection className="text-center mb-20">
+            <div className="inline-flex items-center px-4 py-2 bg-amber-100 rounded-full text-amber-800 text-sm font-medium mb-6">
+              <Award className="w-4 h-4 mr-2" />
+              Our Services
+            </div>
+            <h2 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
+              Premium <span className="bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">Services</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              From property development to investment advisory, we provide comprehensive real estate solutions tailored to your unique needs and aspirations.
             </p>
           </AnimatedSection>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {services.map((service, index) => (
               <AnimatedSection key={index} delay={index * 150} animation="fadeUp">
-                <div className="text-center p-8 bg-gray-50 rounded-xl hover:bg-amber-50 transition-all duration-500 group transform hover:scale-105 hover:shadow-lg">
-                <div className="text-kasturi-gold group-hover:text-kasturi-gold-dark mb-6 flex justify-center">
-                  {service.icon}
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">{service.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{service.description}</p>
+                <div className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-amber-100">
+                  <div className="flex items-start space-x-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-20 h-20 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-2xl flex items-center justify-center text-amber-600 group-hover:from-amber-500 group-hover:to-yellow-500 group-hover:text-white transition-all duration-300 transform group-hover:scale-110">
+                        {service.icon}
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-amber-600 transition-colors">
+                        {service.title}
+                      </h3>
+                      <p className="text-gray-600 leading-relaxed mb-6">
+                        {service.description}
+                      </p>
+                      <ul className="space-y-2">
+                        {service.features.map((feature, idx) => (
+                          <li key={idx} className="flex items-center text-sm text-gray-600">
+                            <CheckCircle className="w-4 h-4 text-amber-500 mr-2 flex-shrink-0" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </AnimatedSection>
             ))}
@@ -314,49 +441,71 @@ Best regards`);
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-gray-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <section id="about" className="py-24 bg-gray-900 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-amber-900"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23f59e0b" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="1"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <AnimatedSection animation="slideRight">
-              <h2 className="text-4xl font-bold mb-6">About Kasturi Reality Venture</h2>
-              <p className="text-xl text-gray-300 mb-6 leading-relaxed">
-                With over 5 years of excellence in the real estate industry, Kasturi Reality Venture has been at the forefront of creating premium living and working spaces that define modern luxury.
+              <div className="inline-flex items-center px-4 py-2 bg-amber-500/20 rounded-full text-amber-300 text-sm font-medium mb-8">
+                <Award className="w-4 h-4 mr-2" />
+                About Kasturi Reality Venture
+              </div>
+              
+              <h2 className="text-4xl lg:text-6xl font-bold mb-8 leading-tight">
+                Building Dreams <span className="bg-gradient-to-r from-amber-400 to-yellow-400 bg-clip-text text-transparent">Since 2019</span>
+              </h2>
+              
+              <p className="text-xl text-gray-300 mb-8 leading-relaxed">
+                With over 5 years of excellence in the real estate industry, Kasturi Reality Venture has been at the forefront of creating premium living and working spaces that define modern luxury and sophistication.
               </p>
               
-              <div className="space-y-4 mb-8">
-                <div className="flex items-center">
-                  <CheckCircle className="w-6 h-6 text-kasturi-gold mr-3" />
-                  <span>Award-winning architectural designs</span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-gradient-to-r from-amber-400 to-yellow-400 rounded-full flex items-center justify-center">
+                    <CheckCircle className="w-5 h-5 text-gray-900" />
+                  </div>
+                  <span className="text-gray-300">Award-winning designs</span>
                 </div>
-                <div className="flex items-center">
-                  <CheckCircle className="w-6 h-6 text-kasturi-gold mr-3" />
-                  <span>Sustainable and eco-friendly construction</span>
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-gradient-to-r from-amber-400 to-yellow-400 rounded-full flex items-center justify-center">
+                    <CheckCircle className="w-5 h-5 text-gray-900" />
+                  </div>
+                  <span className="text-gray-300">Sustainable construction</span>
                 </div>
-                <div className="flex items-center">
-                  <CheckCircle className="w-6 h-6 text-kasturi-gold mr-3" />
-                  <span>Premium locations across Hyderabad</span>
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-gradient-to-r from-amber-400 to-yellow-400 rounded-full flex items-center justify-center">
+                    <CheckCircle className="w-5 h-5 text-gray-900" />
+                  </div>
+                  <span className="text-gray-300">Premium locations</span>
                 </div>
-                <div className="flex items-center">
-                  <CheckCircle className="w-6 h-6 text-kasturi-gold mr-3" />
-                  <span>Transparent and ethical business practices</span>
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-gradient-to-r from-amber-400 to-yellow-400 rounded-full flex items-center justify-center">
+                    <CheckCircle className="w-5 h-5 text-gray-900" />
+                  </div>
+                  <span className="text-gray-300">Transparent dealings</span>
                 </div>
               </div>
               
-              <button className="bg-kasturi-gold text-white px-8 py-3 rounded-lg hover:bg-kasturi-gold-dark transition-colors font-medium">
+              <button className="bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-8 py-4 rounded-full hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105">
                 Learn More About Us
               </button>
             </AnimatedSection>
             
             <AnimatedSection className="relative" animation="slideLeft">
-              <img 
-                src="https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg" 
-                alt="About Kasturi" 
-                className="w-full h-96 object-cover rounded-xl"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-xl"></div>
-              <div className="absolute bottom-6 left-6 right-6">
-                <h3 className="text-2xl font-bold mb-2">Building Dreams Since 2019</h3>
-                <p className="text-gray-200">Creating spaces where memories are made</p>
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-400/20 to-yellow-400/20 rounded-3xl transform -rotate-6"></div>
+                <img 
+                  src="https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg" 
+                  alt="About Kasturi" 
+                  className="relative w-full h-96 lg:h-[500px] object-cover rounded-3xl shadow-2xl"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent rounded-3xl"></div>
+                <div className="absolute bottom-8 left-8 right-8">
+                  <h3 className="text-3xl font-bold mb-2">Creating Memories</h3>
+                  <p className="text-gray-200">Where dreams become reality</p>
+                </div>
               </div>
             </AnimatedSection>
           </div>
@@ -364,11 +513,19 @@ Best regards`);
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-24 bg-gradient-to-br from-amber-50 to-yellow-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">What Our Clients Say</h2>
-            <p className="text-xl text-gray-600">Hear from satisfied homeowners and investors who chose Kasturi</p>
+          <AnimatedSection className="text-center mb-20">
+            <div className="inline-flex items-center px-4 py-2 bg-amber-100 rounded-full text-amber-800 text-sm font-medium mb-6">
+              <Star className="w-4 h-4 mr-2 fill-current" />
+              Client Testimonials
+            </div>
+            <h2 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
+              What Our <span className="bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">Clients Say</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Hear from satisfied homeowners and investors who chose Kasturi Reality Venture for their property needs
+            </p>
           </AnimatedSection>
           
           <AnimatedSection delay={200}>
@@ -378,199 +535,248 @@ Best regards`);
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-white">
+      <section id="contact" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Get In Touch</h2>
-            <p className="text-xl text-gray-600">Ready to find your dream property? Contact our expert team today</p>
+          <AnimatedSection className="text-center mb-20">
+            <div className="inline-flex items-center px-4 py-2 bg-amber-100 rounded-full text-amber-800 text-sm font-medium mb-6">
+              <MessageCircle className="w-4 h-4 mr-2" />
+              Get In Touch
+            </div>
+            <h2 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
+              Ready to Find Your <span className="bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">Dream Property?</span>
+            </h2>
+            <p className="text-xl text-gray-600">Contact our expert team today and let us help you make the right investment</p>
           </AnimatedSection>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <AnimatedSection animation="slideRight">
-              <h3 className="text-2xl font-bold text-gray-900 mb-8">Contact Information</h3>
-              
-              <div className="space-y-6">
-                <div className="flex items-center">
-                  <Phone className="w-6 h-6 text-yellow-600 mr-4" />
-                  <div>
-                    <div className="font-medium text-gray-900">Phone</div>
-                    <div className="text-gray-600">+91 9876543210</div>
-                    <div className="text-sm text-kasturi-gold font-medium">Manoj Shrivastav</div>
-                    <button 
-                      onClick={handleWhatsAppInquiry}
-                      className="flex items-center space-x-1 text-green-600 hover:text-green-700 transition-colors mt-1 text-sm"
-                    >
-                      <MessageCircle className="w-4 h-4" />
-                      <span>WhatsApp</span>
-                    </button>
+              <div className="bg-gradient-to-br from-gray-50 to-amber-50 rounded-3xl p-8 shadow-lg">
+                <h3 className="text-3xl font-bold text-gray-900 mb-8">Contact Information</h3>
+                
+                <div className="space-y-8">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-xl flex items-center justify-center text-white">
+                      <Phone className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900 text-lg">Phone</div>
+                      <div className="text-gray-600 text-lg">+91 9876543210</div>
+                      <div className="text-amber-600 font-medium">Manoj Shrivastav</div>
+                      <button 
+                        onClick={handleWhatsAppInquiry}
+                        className="flex items-center space-x-1 text-green-600 hover:text-green-700 transition-colors mt-2 text-sm font-medium"
+                      >
+                        <MessageCircle className="w-4 h-4" />
+                        <span>WhatsApp</span>
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-xl flex items-center justify-center text-white">
+                      <Mail className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900 text-lg">Email</div>
+                      <div className="text-gray-600 text-lg">Kasturiventures99@gmail.com</div>
+                      <button 
+                        onClick={handleEmailInquiry}
+                        className="text-blue-600 hover:text-blue-700 transition-colors text-sm font-medium"
+                      >
+                        Send Email
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-xl flex items-center justify-center text-white">
+                      <MapPin className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900 text-lg">Address</div>
+                      <div className="text-gray-600 leading-relaxed">
+                        Vatsalya flat no. B-103, Sector no. 8,<br />
+                        Charkop, Kandivali West,<br />
+                        Mumbai 400067
+                      </div>
+                    </div>
                   </div>
                 </div>
                 
-                <div className="flex items-center">
-                  <Mail className="w-6 h-6 text-yellow-600 mr-4" />
-                  <div>
-                    <div className="font-medium text-gray-900">Email</div>
-                    <div className="text-gray-600">Kasturiventures99@gmail.com</div>
-                    <button 
-                      onClick={handleEmailInquiry}
-                      className="text-blue-600 hover:text-blue-700 transition-colors text-sm"
-                    >
-                      Send Email
-                    </button>
+                <div className="mt-10 p-6 bg-white rounded-2xl shadow-sm">
+                  <h4 className="text-xl font-bold text-gray-900 mb-4">Office Hours</h4>
+                  <div className="space-y-2 text-gray-600">
+                    <div className="flex justify-between">
+                      <span>Monday - Friday:</span>
+                      <span className="font-medium">9:00 AM - 7:00 PM</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Saturday:</span>
+                      <span className="font-medium">10:00 AM - 5:00 PM</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Sunday:</span>
+                      <span className="font-medium">By Appointment</span>
+                    </div>
                   </div>
-                </div>
-                
-                <div className="flex items-center">
-                  <MapPin className="w-6 h-6 text-yellow-600 mr-4" />
-                  <div>
-                    <div className="font-medium text-gray-900">Address</div>
-                    <div className="text-gray-600">Vatsalya flat no. B-103, Sector no. 8, Charkop, Kandivali West, Mumbai 400067</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mt-8">
-                <h4 className="text-lg font-bold text-gray-900 mb-4">Office Hours</h4>
-                <div className="text-gray-600 space-y-2">
-                  <div>Monday - Friday: 9:00 AM - 7:00 PM</div>
-                  <div>Saturday: 10:00 AM - 5:00 PM</div>
-                  <div>Sunday: By Appointment</div>
                 </div>
               </div>
             </AnimatedSection>
             
             <AnimatedSection animation="slideLeft">
-              <form className="space-y-6 contact-form" onSubmit={(e) => e.preventDefault()}>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="bg-gradient-to-br from-gray-50 to-amber-50 rounded-3xl p-8 shadow-lg">
+                <h3 className="text-3xl font-bold text-gray-900 mb-8">Send us a Message</h3>
+                
+                <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FloatingLabelInput
+                      label="First Name"
+                      type="text"
+                      value={contactForm.firstName}
+                      onChange={(value) => setContactForm({...contactForm, firstName: value})}
+                      required
+                    />
+                    <FloatingLabelInput
+                      label="Last Name"
+                      type="text"
+                      value={contactForm.lastName}
+                      onChange={(value) => setContactForm({...contactForm, lastName: value})}
+                      required
+                    />
+                  </div>
+                  
                   <FloatingLabelInput
-                    label="First Name"
-                    type="text"
-                    value={contactForm.firstName}
-                    onChange={(value) => setContactForm({...contactForm, firstName: value})}
+                    label="Email Address"
+                    type="email"
+                    value={contactForm.email}
+                    onChange={(value) => setContactForm({...contactForm, email: value})}
                     required
                   />
+                  
                   <FloatingLabelInput
-                    label="Last Name"
-                    type="text"
-                    value={contactForm.lastName}
-                    onChange={(value) => setContactForm({...contactForm, lastName: value})}
+                    label="Phone Number"
+                    type="tel"
+                    value={contactForm.phone}
+                    onChange={(value) => setContactForm({...contactForm, phone: value})}
                     required
                   />
-                </div>
-                
-                <FloatingLabelInput
-                  label="Email Address"
-                  type="email"
-                  value={contactForm.email}
-                  onChange={(value) => setContactForm({...contactForm, email: value})}
-                  required
-                />
-                
-                <FloatingLabelInput
-                  label="Phone Number"
-                  type="tel"
-                  value={contactForm.phone}
-                  onChange={(value) => setContactForm({...contactForm, phone: value})}
-                  required
-                />
-                
-                <div className="relative">
-                  <select 
-                    value={contactForm.interest}
-                    onChange={(e) => setContactForm({...contactForm, interest: e.target.value})}
-                    className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kasturi-gold focus:border-transparent transition-all duration-300 transform focus:scale-105"
-                  >
-                    <option value="">I'm interested in...</option>
-                    <option value="buying">Buying a property</option>
-                    <option value="selling">Selling a property</option>
-                    <option value="renting">Renting a property</option>
-                    <option value="investment">Investment opportunities</option>
-                  </select>
-                </div>
-                
-                <FloatingLabelTextarea
-                  label="Tell us about your requirements..."
-                  value={contactForm.message}
-                  onChange={(value) => setContactForm({...contactForm, message: value})}
-                  rows={4}
-                />
-                
-                <button className="w-full bg-kasturi-gold text-white py-4 rounded-lg hover:bg-kasturi-gold-dark transition-all duration-300 font-medium text-lg transform hover:scale-105 active:scale-95 cta-pulse">
-                  Send Message
-                </button>
-                
-                <div className="flex space-x-4 mt-4">
-                  <button 
-                    type="button"
-                    onClick={handleEmailInquiry}
-                    className="flex-1 flex items-center justify-center space-x-2 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 font-medium"
-                  >
-                    <Mail className="w-5 h-5" />
-                    <span>Email Us</span>
+                  
+                  <div className="relative">
+                    <select 
+                      value={contactForm.interest}
+                      onChange={(e) => setContactForm({...contactForm, interest: e.target.value})}
+                      className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 bg-white"
+                    >
+                      <option value="">I'm interested in...</option>
+                      <option value="buying">Buying a property</option>
+                      <option value="selling">Selling a property</option>
+                      <option value="renting">Renting a property</option>
+                      <option value="investment">Investment opportunities</option>
+                    </select>
+                  </div>
+                  
+                  <FloatingLabelTextarea
+                    label="Tell us about your requirements..."
+                    value={contactForm.message}
+                    onChange={(value) => setContactForm({...contactForm, message: value})}
+                    rows={4}
+                  />
+                  
+                  <button className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-xl hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105">
+                    Send Message
                   </button>
                   
-                  <button 
-                    type="button"
-                    onClick={handleWhatsAppInquiry}
-                    className="flex-1 flex items-center justify-center space-x-2 bg-green-600 text-white py-3 rounded-lg hover:green-700 transition-all duration-300 font-medium"
-                  >
-                    <MessageCircle className="w-5 h-5" />
-                    <span>WhatsApp</span>
-                  </button>
-                </div>
-              </form>
+                  <div className="flex space-x-4 mt-6">
+                    <button 
+                      type="button"
+                      onClick={handleEmailInquiry}
+                      className="flex-1 flex items-center justify-center space-x-2 bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition-all duration-300 font-medium"
+                    >
+                      <Mail className="w-5 h-5" />
+                      <span>Email Us</span>
+                    </button>
+                    
+                    <button 
+                      type="button"
+                      onClick={handleWhatsAppInquiry}
+                      className="flex-1 flex items-center justify-center space-x-2 bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 transition-all duration-300 font-medium"
+                    >
+                      <MessageCircle className="w-5 h-5" />
+                      <span>WhatsApp</span>
+                    </button>
+                  </div>
+                </form>
+              </div>
             </AnimatedSection>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
+      <footer className="bg-gray-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <img 
-                src="/kasturi logo 2.jpg" 
-                alt="Kasturi Reality Venture" 
-                className="h-16 w-auto mb-4 bg-white p-2 rounded"
-              />
-              <p className="text-gray-400 leading-relaxed">
-                Building dreams and creating premium living spaces for over 5 years. Your trusted partner in real estate.
+            <div className="md:col-span-2">
+              <div className="flex items-center space-x-4 mb-6">
+                <img 
+                  src="/kasturi logo 2.jpg" 
+                  alt="Kasturi Reality Venture" 
+                  className="h-16 w-auto rounded-lg"
+                />
+                <div>
+                  <h3 className="text-2xl font-bold bg-gradient-to-r from-amber-400 to-yellow-400 bg-clip-text text-transparent">
+                    Kasturi Reality Venture
+                  </h3>
+                  <p className="text-gray-400">Premium Real Estate Solutions</p>
+                </div>
+              </div>
+              <p className="text-gray-400 leading-relaxed max-w-md">
+                Building dreams and creating premium living spaces for over 5 years. Your trusted partner in real estate with a commitment to excellence and customer satisfaction.
               </p>
             </div>
             
             <div>
-              <h4 className="text-lg font-bold mb-4">Quick Links</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#home" className="hover:text-white transition-colors">Home</a></li>
-                <li><a href="#properties" className="hover:text-white transition-colors">Properties</a></li>
-                <li><a href="#services" className="hover:text-white transition-colors">Services</a></li>
-                <li><a href="#about" className="hover:text-white transition-colors">About</a></li>
+              <h4 className="text-lg font-bold mb-6">Quick Links</h4>
+              <ul className="space-y-3 text-gray-400">
+                <li><a href="#home" className="hover:text-amber-400 transition-colors">Home</a></li>
+                <li><a href="#properties" className="hover:text-amber-400 transition-colors">Properties</a></li>
+                <li><a href="#services" className="hover:text-amber-400 transition-colors">Services</a></li>
+                <li><a href="#about" className="hover:text-amber-400 transition-colors">About</a></li>
+                <li><a href="#contact" className="hover:text-amber-400 transition-colors">Contact</a></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="text-lg font-bold mb-4">Services</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li>Residential Properties</li>
+              <h4 className="text-lg font-bold mb-6">Services</h4>
+              <ul className="space-y-3 text-gray-400">
+                <li>Luxury Residences</li>
                 <li>Commercial Spaces</li>
                 <li>Property Management</li>
                 <li>Investment Advisory</li>
               </ul>
             </div>
-            
-            <div>
-              <h4 className="text-lg font-bold mb-4">Connect With Us</h4>
-              <div className="text-gray-400 space-y-2">
-                <div>+91 9876543210</div>
-                <div>Kasturiventures99@gmail.com</div>
-                <div>Mumbai, Maharashtra</div>
-              </div>
-            </div>
           </div>
           
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 Kasturi Reality Ventures. All rights reserved.</p>
+          <div className="border-t border-gray-800 mt-12 pt-8">
+            <div className="flex flex-col md:flex-row justify-between items-center">
+              <p className="text-gray-400 text-sm">
+                &copy; 2024 Kasturi Reality Ventures. All rights reserved.
+              </p>
+              <div className="flex space-x-6 mt-4 md:mt-0">
+                <button 
+                  onClick={handleEmailInquiry}
+                  className="text-gray-400 hover:text-amber-400 transition-colors"
+                >
+                  <Mail className="w-5 h-5" />
+                </button>
+                <button 
+                  onClick={handleWhatsAppInquiry}
+                  className="text-gray-400 hover:text-green-400 transition-colors"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
