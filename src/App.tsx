@@ -560,7 +560,6 @@ Best regards`);
                     <div>
                       <div className="font-semibold text-gray-900 text-lg">Phone</div>
                       <div className="text-gray-600 text-lg">+91 99877 39999</div>
-                      <div className="text-gray-600 text-lg">+91 99877 39999</div>
                       <div className="text-amber-600 font-medium">Manoj Shrivastav</div>
                       <button
                         onClick={handleWhatsAppInquiry}
