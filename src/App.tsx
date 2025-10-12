@@ -196,17 +196,10 @@ useEffect(() => {
             </div>
             
             <div className="flex items-center space-x-4">
-              <button
-                onClick={() => setIsFeedbackViewerOpen(true)}
-                className="hidden md:flex items-center space-x-2 text-amber-600 hover:text-amber-700 transition-colors font-medium"
-              >
-                <Star className="w-5 h-5" />
-                <span>View Feedback</span>
-              </button>
               <button className="hidden md:block bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-6 py-3 rounded-full hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 font-medium shadow-lg hover:shadow-xl transform hover:scale-105">
                 Get Quote
               </button>
-              <button 
+              <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
               >
