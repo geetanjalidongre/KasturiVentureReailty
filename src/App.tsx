@@ -12,6 +12,7 @@ import { FilterPanel } from './components/FilterPanel';
 import { FloatingLabelInput, FloatingLabelTextarea } from './components/FloatingLabels';
 import { TestimonialSlider } from './components/TestimonialSlider';
 import { FeedbackModal } from './components/FeedbackModal';
+import { FeedbackViewer } from './components/FeedbackViewer';
 import { emailEnquiryService } from './lib/supabase';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
   const [activeProperty, setActiveProperty] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+  const [isFeedbackViewerOpen, setIsFeedbackViewerOpen] = useState(false);
   const [contactForm, setContactForm] = useState({
     firstName: '',
     lastName: '',
@@ -211,6 +213,13 @@ Best regards`);
             </div>
             
             <div className="flex items-center space-x-4">
+              <button
+                onClick={() => setIsFeedbackViewerOpen(true)}
+                className="hidden md:flex items-center space-x-2 text-amber-600 hover:text-amber-700 transition-colors font-medium"
+              >
+                <Star className="w-5 h-5" />
+                <span>View Feedback</span>
+              </button>
               <button className="hidden md:block bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-6 py-3 rounded-full hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 font-medium shadow-lg hover:shadow-xl transform hover:scale-105">
                 Get Quote
               </button>
@@ -793,6 +802,9 @@ Best regards`);
 
       {/* Feedback Modal */}
       <FeedbackModal isOpen={isFeedbackOpen} onClose={() => setIsFeedbackOpen(false)} />
+
+      {/* Feedback Viewer Modal */}
+      <FeedbackViewer isOpen={isFeedbackViewerOpen} onClose={() => setIsFeedbackViewerOpen(false)} />
     </div>
   );
 }

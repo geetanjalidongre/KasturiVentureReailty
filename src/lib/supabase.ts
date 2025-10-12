@@ -379,5 +379,15 @@ export const feedbackService = {
 
     if (error) throw error;
     return data as Feedback[];
+  },
+
+  // Delete feedback
+  async deleteFeedback(id: string) {
+    const { error } = await supabase
+      .from('feedback')
+      .delete()
+      .eq('id', id);
+
+    if (error) throw error;
   }
 };
