@@ -549,25 +549,25 @@ useEffect(() => {
       <section id="contact" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="text-center mb-20">
-            <div className="inline-flex items-center px-4 py-2 bg-amber-100 rounded-full text-amber-800 text-sm font-medium mb-6">
-              <MessageCircle className="w-4 h-4 mr-2" />
+            <div className="inline-flex items-center px-4 py-2 bg-amber-100 rounded-full text-amber-800 text-sm font-medium mb-6 animate-bounce animate-glow">
+              <MessageCircle className="w-4 h-4 mr-2 animate-rotate-in" />
               Get In Touch
             </div>
-            <h2 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
-              Ready to Find Your <span className="bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">Dream Property?</span>
+            <h2 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6 animate-slide-from-top">
+              Ready to Find Your <span className="bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent animate-gradient">Dream Property?</span>
             </h2>
-            <p className="text-xl text-gray-600">Contact our expert team today and let us help you make the right investment</p>
+            <p className="text-xl text-gray-600 animate-fade-in" style={{ animationDelay: '0.3s' }}>Contact our expert team today and let us help you make the right investment</p>
           </AnimatedSection>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <AnimatedSection animation="slideRight">
-              <div className="bg-gradient-to-br from-gray-50 to-amber-50 rounded-3xl p-8 shadow-lg">
+              <div className="bg-gradient-to-br from-gray-50 to-amber-50 rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105">
                 <h3 className="text-3xl font-bold text-gray-900 mb-8">Contact Information</h3>
                 
                 <div className="space-y-8">
-                  <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-xl flex items-center justify-center text-white">
-                      <Phone className="w-6 h-6" />
+                  <div className="flex items-start space-x-4 group hover:bg-white hover:shadow-md transition-all duration-300 p-4 rounded-xl animate-zoom-in" style={{ animationDelay: '0.2s' }}>
+                    <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-xl flex items-center justify-center text-white group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 animate-glow">
+                      <Phone className="w-6 h-6 group-hover:animate-bounce" />
                     </div>
                     <div>
                       <div className="font-semibold text-gray-900 text-lg">Phone</div>
@@ -583,9 +583,9 @@ useEffect(() => {
                     </div>
                   </div>
                   
-                  <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-xl flex items-center justify-center text-white">
-                      <Mail className="w-6 h-6" />
+                  <div className="flex items-start space-x-4 group hover:bg-white hover:shadow-md transition-all duration-300 p-4 rounded-xl animate-zoom-in" style={{ animationDelay: '0.4s' }}>
+                    <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-xl flex items-center justify-center text-white group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 animate-glow">
+                      <Mail className="w-6 h-6 group-hover:animate-bounce" />
                     </div>
                     <div>
                       <div className="font-semibold text-gray-900 text-lg">Email</div>
@@ -599,9 +599,9 @@ useEffect(() => {
                     </div>
                   </div>
                   
-                  <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-xl flex items-center justify-center text-white">
-                      <MapPin className="w-6 h-6" />
+                  <div className="flex items-start space-x-4 group hover:bg-white hover:shadow-md transition-all duration-300 p-4 rounded-xl animate-zoom-in" style={{ animationDelay: '0.6s' }}>
+                    <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-xl flex items-center justify-center text-white group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 animate-glow">
+                      <MapPin className="w-6 h-6 group-hover:animate-bounce" />
                     </div>
                     <div>
                       <div className="font-semibold text-gray-900 text-lg">Address</div>
@@ -614,8 +614,11 @@ useEffect(() => {
                   </div>
                 </div>
                 
-                <div className="mt-10 p-6 bg-white rounded-2xl shadow-sm">
-                  <h4 className="text-xl font-bold text-gray-900 mb-4">Office Hours</h4>
+                <div className="mt-10 p-6 bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 animate-zoom-in" style={{ animationDelay: '0.8s' }}>
+                  <h4 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></div>
+                    Office Hours
+                  </h4>
                   <div className="space-y-2 text-gray-600">
                     <div className="flex justify-between">
                       <span>Monday - Friday:</span>
@@ -635,11 +638,11 @@ useEffect(() => {
             </AnimatedSection>
             
             <AnimatedSection animation="slideLeft">
-              <div className="bg-gradient-to-br from-gray-50 to-amber-50 rounded-3xl p-8 shadow-lg">
+              <div className="bg-gradient-to-br from-gray-50 to-amber-50 rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105">
                 <h3 className="text-3xl font-bold text-gray-900 mb-8">Send us a Message</h3>
                 
                 <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 animate-zoom-in" style={{ animationDelay: '0.2s' }}>
                     <FloatingLabelInput
                       label="First Name"
                       type="text"
@@ -656,27 +659,31 @@ useEffect(() => {
                     />
                   </div>
                   
-                  <FloatingLabelInput
-                    label="Email Address"
-                    type="email"
-                    value={contactForm.email}
-                    onChange={(value) => setContactForm({...contactForm, email: value})}
-                    required
-                  />
+                  <div className="animate-zoom-in" style={{ animationDelay: '0.3s' }}>
+                    <FloatingLabelInput
+                      label="Email Address"
+                      type="email"
+                      value={contactForm.email}
+                      onChange={(value) => setContactForm({...contactForm, email: value})}
+                      required
+                    />
+                  </div>
                   
-                  <FloatingLabelInput
-                    label="Phone Number"
-                    type="tel"
-                    value={contactForm.phone}
-                    onChange={(value) => setContactForm({...contactForm, phone: value})}
-                    required
-                  />
+                  <div className="animate-zoom-in" style={{ animationDelay: '0.4s' }}>
+                    <FloatingLabelInput
+                      label="Phone Number"
+                      type="tel"
+                      value={contactForm.phone}
+                      onChange={(value) => setContactForm({...contactForm, phone: value})}
+                      required
+                    />
+                  </div>
                   
-                  <div className="relative">
-                    <select 
+                  <div className="relative animate-zoom-in" style={{ animationDelay: '0.5s' }}>
+                    <select
                       value={contactForm.interest}
                       onChange={(e) => setContactForm({...contactForm, interest: e.target.value})}
-                      className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 bg-white"
+                      className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 bg-white hover:border-amber-400 hover:shadow-md"
                     >
                       <option value="">I'm interested in...</option>
                       <option value="buying">Buying a property</option>
@@ -686,31 +693,33 @@ useEffect(() => {
                     </select>
                   </div>
                   
-                  <FloatingLabelTextarea
-                    label="Tell us about your requirements..."
-                    value={contactForm.message}
-                    onChange={(value) => setContactForm({...contactForm, message: value})}
-                    rows={4}
-                  />
+                  <div className="animate-zoom-in" style={{ animationDelay: '0.6s' }}>
+                    <FloatingLabelTextarea
+                      label="Tell us about your requirements..."
+                      value={contactForm.message}
+                      onChange={(value) => setContactForm({...contactForm, message: value})}
+                      rows={4}
+                    />
+                  </div>
                   
-                  <button className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-xl hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105">
+                  <button className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-xl hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 animate-zoom-in hover:animate-pulse" style={{ animationDelay: '0.7s' }}>
                     Send Message
                   </button>
                   
-                  <div className="flex space-x-4 mt-6">
-                    <button 
+                  <div className="flex space-x-4 mt-6 animate-zoom-in" style={{ animationDelay: '0.8s' }}>
+                    <button
                       type="button"
                       onClick={handleEmailInquiry}
-                      className="flex-1 flex items-center justify-center space-x-2 bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition-all duration-300 font-medium"
+                      className="flex-1 flex items-center justify-center space-x-2 bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition-all duration-300 font-medium hover:scale-105 hover:shadow-lg hover:rotate-2"
                     >
                       <Mail className="w-5 h-5" />
                       <span>Email Us</span>
                     </button>
-                    
-                    <button 
+
+                    <button
                       type="button"
                       onClick={handleWhatsAppInquiry}
-                      className="flex-1 flex items-center justify-center space-x-2 bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 transition-all duration-300 font-medium"
+                      className="flex-1 flex items-center justify-center space-x-2 bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 transition-all duration-300 font-medium hover:scale-105 hover:shadow-lg hover:-rotate-2"
                     >
                       <MessageCircle className="w-5 h-5" />
                       <span>WhatsApp</span>
