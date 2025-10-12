@@ -226,9 +226,15 @@ useEffect(() => {
 
       {/* Hero Section */}
       <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        {/* Animated Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23f59e0b%22 fill-opacity=%220.05%22%3E%3Ccircle cx=%2230%22 cy=%2230%22 r=%222%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] animate-pulse"></div>
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0">
+          <img
+            src="https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg"
+            alt="Luxury Property"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/70"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30"></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -241,13 +247,13 @@ useEffect(() => {
                 </div>
                 
                 <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
-                  <span className="block text-gray-900">Discover Your</span>
-                  <span className="block bg-gradient-to-r from-amber-600 via-yellow-600 to-orange-600 bg-clip-text text-transparent animate-gradient">
+                  <span className="block text-white">Discover Your</span>
+                  <span className="block bg-gradient-to-r from-amber-400 via-yellow-400 to-orange-400 bg-clip-text text-transparent animate-gradient">
                     Dream Property
                   </span>
                 </h1>
                 
-                <p className="text-xl lg:text-2xl text-gray-700 leading-relaxed max-w-2xl">
+                <p className="text-xl lg:text-2xl text-gray-200 leading-relaxed max-w-2xl">
                   Experience luxury living with Kasturi Reality Venture. We create exceptional residential and commercial spaces that blend modern elegance with timeless sophistication.
                 </p>
                 
@@ -279,24 +285,24 @@ useEffect(() => {
 
               <div className="grid grid-cols-3 gap-8 pt-12">
                 <div className="text-center group">
-                  <div className="text-4xl font-bold text-gray-900 mb-2">
+                  <div className="text-4xl font-bold text-white mb-2">
                     <AnimatedCounter end={500} suffix="+" />
                   </div>
-                  <div className="text-gray-600 font-medium">Properties Sold</div>
+                  <div className="text-gray-300 font-medium">Properties Sold</div>
                   <div className="w-12 h-1 bg-gradient-to-r from-amber-400 to-yellow-400 mx-auto mt-2 rounded-full group-hover:w-16 transition-all duration-300"></div>
                 </div>
                 <div className="text-center group">
-                  <div className="text-4xl font-bold text-gray-900 mb-2">
+                  <div className="text-4xl font-bold text-white mb-2">
                     <AnimatedCounter end={5} suffix="+" />
                   </div>
-                  <div className="text-gray-600 font-medium">Years Experience</div>
+                  <div className="text-gray-300 font-medium">Years Experience</div>
                   <div className="w-12 h-1 bg-gradient-to-r from-amber-400 to-yellow-400 mx-auto mt-2 rounded-full group-hover:w-16 transition-all duration-300"></div>
                 </div>
                 <div className="text-center group">
-                  <div className="text-4xl font-bold text-gray-900 mb-2">
+                  <div className="text-4xl font-bold text-white mb-2">
                     <AnimatedCounter end={100} suffix="%" />
                   </div>
-                  <div className="text-gray-600 font-medium">Client Satisfaction</div>
+                  <div className="text-gray-300 font-medium">Client Satisfaction</div>
                   <div className="w-12 h-1 bg-gradient-to-r from-amber-400 to-yellow-400 mx-auto mt-2 rounded-full group-hover:w-16 transition-all duration-300"></div>
                 </div>
               </div>
