@@ -13,7 +13,7 @@ import { FloatingLabelInput, FloatingLabelTextarea } from './components/Floating
 import { TestimonialSlider } from './components/TestimonialSlider';
 import { FeedbackModal } from './components/FeedbackModal';
 import { FeedbackViewer } from './components/FeedbackViewer';
-import { emailEnquiryService } from './lib/supabase';
+import { emailEnquiryService, propertyService, Property } from './lib/supabase';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,6 +21,15 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const [isFeedbackViewerOpen, setIsFeedbackViewerOpen] = useState(false);
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [isLoadingProperties, setIsLoadingProperties] = useState(true);
+  const [filters, setFilters] = useState({
+    type: 'All',
+    location: 'All',
+    minPrice: undefined,
+    maxPrice: undefined,
+    bedrooms: undefined
+  });
   const [contactForm, setContactForm] = useState({
     firstName: '',
     lastName: '',
@@ -63,56 +72,30 @@ Best regards`);
     window.open(`https://wa.me/919876543210?text=${message}`, '_blank');
   };
 
-  const properties = [
-    {
-      id: 1,
-      title: "Royal Gardens Villa",
-      price: "₹2.5 Cr",
-      location: "Banjara Hills, Hyderabad",
-      beds: 4,
-      baths: 3,
-      sqft: "3,500",
-      image: "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg",
-      type: "Villa",
-      featured: true
-    },
-    {
-      id: 2,
-      title: "Skyline Residences",
-      price: "₹85 L - 1.2 Cr",
-      location: "Gachibowli, Hyderabad",
-      beds: "2-3",
-      baths: "2-3",
-      sqft: "1,200-1,800",
-      image: "https://images.pexels.com/photos/439391/pexels-photo-439391.jpeg",
-      type: "Apartment",
-      featured: true
-    },
-    {
-      id: 3,
-      title: "Tech Hub Complex",
-      price: "₹5-50 L",
-      location: "HITEC City, Hyderabad",
-      beds: "Office",
-      baths: "Common",
-      sqft: "500-5,000",
-      image: "https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg",
-      type: "Commercial",
-      featured: true
-    },
-    {
-      id: 4,
-      title: "Serene Homes",
-      price: "₹1.8 Cr",
-      location: "Kompally, Hyderabad",
-      beds: 3,
-      baths: 2,
-      sqft: "2,800",
-      image: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg",
-      type: "Villa",
-      featured: false
+useEffect(() => {
+    loadProperties();
+  }, []);
+
+  const loadProperties = async () => {
+    setIsLoadingProperties(true);
+    try {
+      const data = await propertyService.getProperties();
+      setProperties(data);
+    } catch (error) {
+      console.error('Error loading properties:', error);
+    } finally {
+      setIsLoadingProperties(false);
     }
-  ];
+  };
+
+  const filteredProperties = properties.filter(property => {
+    if (filters.type !== 'All' && property.property_type !== filters.type) return false;
+    if (filters.location !== 'All' && !property.location.includes(filters.location)) return false;
+    if (filters.minPrice && property.price < filters.minPrice) return false;
+    if (filters.maxPrice && property.price > filters.maxPrice) return false;
+    if (filters.bedrooms && property.bedrooms !== filters.bedrooms) return false;
+    return true;
+  });
 
   const featuredProperties = properties.filter(p => p.featured);
 
@@ -384,12 +367,22 @@ Best regards`);
             <FilterPanel />
           </AnimatedSection>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
-            {properties.map((property, index) => (
-              <AnimatedSection key={property.id} delay={index * 100} animation="fadeUp">
-                <PropertyCard property={property} index={index} />
-              </AnimatedSection>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
+            {isLoadingProperties ? (
+              <div className="col-span-full flex items-center justify-center py-20">
+                <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
+              </div>
+            ) : filteredProperties.length === 0 ? (
+              <div className="col-span-full text-center py-20">
+                <p className="text-xl text-gray-600">No properties found matching your criteria</p>
+              </div>
+            ) : (
+              filteredProperties.map((property, index) => (
+                <AnimatedSection key={property.id} delay={index * 100} animation="fadeUp">
+                  <PropertyCard property={property} index={index} />
+                </AnimatedSection>
+              ))
+            )}
           </div>
           
           <AnimatedSection className="text-center mt-16" delay={400}>

@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react';
-
-interface Property {
-  id: number;
-  title: string;
-  price: string;
-  location: string;
-  image: string;
-  type: string;
-}
+import { Property } from '../lib/supabase';
 
 interface PropertyCarouselProps {
   properties: Property[];
@@ -41,64 +33,78 @@ export const PropertyCarousel: React.FC<PropertyCarouselProps> = ({ properties }
   };
 
   useEffect(() => {
-    if (!isPlaying) return;
-    
+    if (!isPlaying || properties.length === 0) return;
+
     const interval = setInterval(nextSlide, 5000);
     return () => clearInterval(interval);
-  }, [isPlaying, currentIndex]);
+  }, [isPlaying, currentIndex, properties.length]);
+
+  if (properties.length === 0) {
+    return (
+      <div className="relative overflow-hidden rounded-3xl shadow-2xl bg-gradient-to-br from-gray-900 to-gray-800 h-96 md:h-[600px] flex items-center justify-center">
+        <p className="text-white text-xl">No featured properties available</p>
+      </div>
+    );
+  }
 
   return (
     <div className="relative overflow-hidden rounded-3xl shadow-2xl bg-gradient-to-br from-gray-900 to-gray-800">
       {/* Main Carousel */}
       <div className="relative h-96 md:h-[600px]">
-        {properties.map((property, index) => (
-          <div
-            key={property.id}
-            className={`carousel-slide absolute inset-0 transition-all duration-700 ease-in-out ${
-              index === currentIndex
-                ? 'active opacity-100 translate-x-0 z-10'
-                : index < currentIndex
-                ? 'prev opacity-0 -translate-x-full z-0'
-                : 'next opacity-0 translate-x-full z-0'
-            }`}
-          >
-            <img
-              src={property.image}
-              alt={property.title}
-              className="w-full h-full object-cover"
-            />
-            
-            {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-            
-            {/* Content */}
-            <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 text-white">
-              <div className="max-w-4xl">
-                <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-full text-sm font-semibold mb-6 transform hover:scale-105 transition-transform duration-300">
-                  {property.type}
-                </div>
-                
-                <h3 className="text-3xl md:text-5xl font-bold mb-4 leading-tight">
-                  {property.title}
-                </h3>
-                
-                <p className="text-xl md:text-2xl mb-4 text-gray-200">
-                  {property.location}
-                </p>
-                
-                <div className="flex items-center justify-between">
-                  <p className="text-3xl md:text-4xl font-bold text-amber-400">
-                    {property.price}
+        {properties.map((property, index) => {
+          const mainImage = Array.isArray(property.images) && property.images.length > 0
+            ? property.images[0]
+            : 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg';
+
+          return (
+            <div
+              key={property.id}
+              className={`carousel-slide absolute inset-0 transition-all duration-700 ease-in-out ${
+                index === currentIndex
+                  ? 'active opacity-100 translate-x-0 z-10'
+                  : index < currentIndex
+                  ? 'prev opacity-0 -translate-x-full z-0'
+                  : 'next opacity-0 translate-x-full z-0'
+              }`}
+            >
+              <img
+                src={mainImage}
+                alt={property.title}
+                className="w-full h-full object-cover"
+              />
+
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+
+              {/* Content */}
+              <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 text-white">
+                <div className="max-w-4xl">
+                  <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-full text-sm font-semibold mb-6 transform hover:scale-105 transition-transform duration-300">
+                    {property.property_type}
+                  </div>
+
+                  <h3 className="text-3xl md:text-5xl font-bold mb-4 leading-tight">
+                    {property.title}
+                  </h3>
+
+                  <p className="text-xl md:text-2xl mb-4 text-gray-200">
+                    {property.location}
                   </p>
-                  
-                  <button className="bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-full hover:bg-white/30 transition-all duration-300 font-semibold transform hover:scale-105">
-                    View Details
-                  </button>
+
+                  <div className="flex items-center justify-between">
+                    <p className="text-3xl md:text-4xl font-bold text-amber-400">
+                      {property.price_display}
+                    </p>
+
+                    <button className="bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-full hover:bg-white/30 transition-all duration-300 font-semibold transform hover:scale-105">
+                      View Details
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Navigation Controls */}

@@ -1,39 +1,34 @@
 import React from 'react';
 import { MapPin, Bed, Bath, Square, Heart, Eye, Share2 } from 'lucide-react';
+import { Property } from '../lib/supabase';
 
 interface PropertyCardProps {
-  property: {
-    id: number;
-    title: string;
-    price: string;
-    location: string;
-    beds: string | number;
-    baths: string | number;
-    sqft: string;
-    image: string;
-    type: string;
-  };
+  property: Property;
   index: number;
 }
 
 export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) => {
+  const mainImage = Array.isArray(property.images) && property.images.length > 0
+    ? property.images[0]
+    : 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg';
+
   return (
     <div className="property-card group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-amber-200">
       <div className="relative overflow-hidden">
-        <img 
-          src={property.image} 
+        <img
+          src={mainImage}
           alt={property.title}
           className="property-image w-full h-56 object-cover transition-transform duration-700"
         />
-        
+
         {/* Property Type Badge */}
         <div className="absolute top-4 left-4 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg transform group-hover:scale-110 transition-transform duration-300">
-          {property.type}
+          {property.property_type}
         </div>
-        
+
         {/* Price Badge */}
         <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm text-gray-900 px-4 py-2 rounded-full text-sm font-bold shadow-lg">
-          {property.price}
+          {property.price_display}
         </div>
         
         {/* Action Buttons */}
@@ -66,15 +61,15 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index }) =
         <div className="grid grid-cols-3 gap-4 mb-6 text-sm text-gray-600">
           <div className="flex items-center justify-center p-3 bg-gray-50 rounded-lg group-hover:bg-amber-50 transition-colors duration-300">
             <Bed className="w-4 h-4 mr-2 text-amber-500" />
-            <span className="font-medium">{property.beds}</span>
+            <span className="font-medium">{property.bedrooms || 0}</span>
           </div>
           <div className="flex items-center justify-center p-3 bg-gray-50 rounded-lg group-hover:bg-amber-50 transition-colors duration-300">
             <Bath className="w-4 h-4 mr-2 text-amber-500" />
-            <span className="font-medium">{property.baths}</span>
+            <span className="font-medium">{property.bathrooms || 0}</span>
           </div>
           <div className="flex items-center justify-center p-3 bg-gray-50 rounded-lg group-hover:bg-amber-50 transition-colors duration-300">
             <Square className="w-4 h-4 mr-2 text-amber-500" />
-            <span className="font-medium">{property.sqft}</span>
+            <span className="font-medium">{property.sqft.toLocaleString()}</span>
           </div>
         </div>
         
