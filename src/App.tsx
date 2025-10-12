@@ -171,12 +171,11 @@ Best regards`);
           <div className="flex justify-between items-center h-20">
             <div className="flex items-center space-x-4">
               <div className="relative">
-                <img 
-                  src="/kasturi logo 2.jpg" 
-                  alt="Kasturi Reality Venture" 
+                <img
+                  src="/KASTURI REAILTY VENTURE 2.jpg"
+                  alt="Kasturi Reality Venture"
                   className="h-16 w-auto rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-400/20 to-yellow-400/20 rounded-lg animate-pulse"></div>
               </div>
               <div className="hidden md:block">
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">
@@ -560,9 +559,10 @@ Best regards`);
                     </div>
                     <div>
                       <div className="font-semibold text-gray-900 text-lg">Phone</div>
-                      <div className="text-gray-600 text-lg">+91 9876543210</div>
+                      <div className="text-gray-600 text-lg">+91 99877 39999</div>
+                      <div className="text-gray-600 text-lg">+91 99877 39999</div>
                       <div className="text-amber-600 font-medium">Manoj Shrivastav</div>
-                      <button 
+                      <button
                         onClick={handleWhatsAppInquiry}
                         className="flex items-center space-x-1 text-green-600 hover:text-green-700 transition-colors mt-2 text-sm font-medium"
                       >
