@@ -231,50 +231,59 @@ useEffect(() => {
           <img
             src="https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg"
             alt="Luxury Property"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover animate-kenburns"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/70"></div>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30"></div>
+        </div>
+
+        {/* Floating Particles */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-20 left-10 w-2 h-2 bg-amber-400/30 rounded-full animate-float" style={{ animationDelay: '0s' }}></div>
+          <div className="absolute top-40 right-20 w-3 h-3 bg-yellow-400/20 rounded-full animate-float" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute bottom-40 left-1/4 w-2 h-2 bg-amber-300/25 rounded-full animate-float" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute top-1/3 right-1/3 w-1.5 h-1.5 bg-yellow-300/30 rounded-full animate-float" style={{ animationDelay: '1.5s' }}></div>
+          <div className="absolute bottom-1/4 right-1/4 w-2.5 h-2.5 bg-amber-400/20 rounded-full animate-float" style={{ animationDelay: '0.5s' }}></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <AnimatedSection className="space-y-8" animation="slideRight">
               <div className="space-y-6">
-                <div className="inline-flex items-center px-4 py-2 bg-amber-100 rounded-full text-amber-800 text-sm font-medium animate-bounce">
-                  <Star className="w-4 h-4 mr-2 fill-current" />
+                <div className="inline-flex items-center px-4 py-2 bg-amber-100 rounded-full text-amber-800 text-sm font-medium animate-bounce animate-glow">
+                  <Star className="w-4 h-4 mr-2 fill-current animate-rotate-in" />
                   Premium Real Estate Since 2019
                 </div>
-                
-                <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
+
+                <h1 className="text-5xl lg:text-7xl font-bold leading-tight animate-slide-from-top">
                   <span className="block text-white">Discover Your</span>
                   <span className="block bg-gradient-to-r from-amber-400 via-yellow-400 to-orange-400 bg-clip-text text-transparent animate-gradient">
                     Dream Property
                   </span>
                 </h1>
-                
-                <p className="text-xl lg:text-2xl text-gray-200 leading-relaxed max-w-2xl">
+
+                <p className="text-xl lg:text-2xl text-gray-200 leading-relaxed max-w-2xl animate-fade-in" style={{ animationDelay: '0.3s' }}>
                   Experience luxury living with Kasturi Reality Venture. We create exceptional residential and commercial spaces that blend modern elegance with timeless sophistication.
                 </p>
                 
-                <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                  <button className="group bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-8 py-4 rounded-full hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 font-semibold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 flex items-center justify-center">
+                <div className="flex flex-col sm:flex-row gap-4 pt-4 animate-zoom-in" style={{ animationDelay: '0.5s' }}>
+                  <button className="group bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-8 py-4 rounded-full hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 font-semibold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 flex items-center justify-center hover:animate-pulse">
                     Explore Properties
                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </button>
-                  
+
                   <div className="flex space-x-3">
-                    <button 
+                    <button
                       onClick={handleEmailInquiry}
-                      className="flex items-center space-x-2 bg-blue-600 text-white px-6 py-4 rounded-full hover:bg-blue-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105"
+                      className="flex items-center space-x-2 bg-blue-600 text-white px-6 py-4 rounded-full hover:bg-blue-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 hover:rotate-3"
                     >
                       <Mail className="w-5 h-5" />
                       <span>Email Us</span>
                     </button>
-                    
-                    <button 
+
+                    <button
                       onClick={handleWhatsAppInquiry}
-                      className="flex items-center space-x-2 bg-green-600 text-white px-6 py-4 rounded-full hover:bg-green-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105"
+                      className="flex items-center space-x-2 bg-green-600 text-white px-6 py-4 rounded-full hover:bg-green-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 hover:-rotate-3"
                     >
                       <MessageCircle className="w-5 h-5" />
                       <span>WhatsApp</span>
@@ -284,56 +293,56 @@ useEffect(() => {
               </div>
 
               <div className="grid grid-cols-3 gap-8 pt-12">
-                <div className="text-center group">
-                  <div className="text-4xl font-bold text-white mb-2">
+                <div className="text-center group transform hover:scale-110 transition-all duration-300 animate-zoom-in" style={{ animationDelay: '0.7s' }}>
+                  <div className="text-4xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors">
                     <AnimatedCounter end={500} suffix="+" />
                   </div>
-                  <div className="text-gray-300 font-medium">Properties Sold</div>
-                  <div className="w-12 h-1 bg-gradient-to-r from-amber-400 to-yellow-400 mx-auto mt-2 rounded-full group-hover:w-16 transition-all duration-300"></div>
+                  <div className="text-gray-300 font-medium group-hover:text-white transition-colors">Properties Sold</div>
+                  <div className="w-12 h-1 bg-gradient-to-r from-amber-400 to-yellow-400 mx-auto mt-2 rounded-full group-hover:w-16 group-hover:animate-pulse transition-all duration-300"></div>
                 </div>
-                <div className="text-center group">
-                  <div className="text-4xl font-bold text-white mb-2">
+                <div className="text-center group transform hover:scale-110 transition-all duration-300 animate-zoom-in" style={{ animationDelay: '0.85s' }}>
+                  <div className="text-4xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors">
                     <AnimatedCounter end={5} suffix="+" />
                   </div>
-                  <div className="text-gray-300 font-medium">Years Experience</div>
-                  <div className="w-12 h-1 bg-gradient-to-r from-amber-400 to-yellow-400 mx-auto mt-2 rounded-full group-hover:w-16 transition-all duration-300"></div>
+                  <div className="text-gray-300 font-medium group-hover:text-white transition-colors">Years Experience</div>
+                  <div className="w-12 h-1 bg-gradient-to-r from-amber-400 to-yellow-400 mx-auto mt-2 rounded-full group-hover:w-16 group-hover:animate-pulse transition-all duration-300"></div>
                 </div>
-                <div className="text-center group">
-                  <div className="text-4xl font-bold text-white mb-2">
+                <div className="text-center group transform hover:scale-110 transition-all duration-300 animate-zoom-in" style={{ animationDelay: '1s' }}>
+                  <div className="text-4xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors">
                     <AnimatedCounter end={100} suffix="%" />
                   </div>
-                  <div className="text-gray-300 font-medium">Client Satisfaction</div>
-                  <div className="w-12 h-1 bg-gradient-to-r from-amber-400 to-yellow-400 mx-auto mt-2 rounded-full group-hover:w-16 transition-all duration-300"></div>
+                  <div className="text-gray-300 font-medium group-hover:text-white transition-colors">Client Satisfaction</div>
+                  <div className="w-12 h-1 bg-gradient-to-r from-amber-400 to-yellow-400 mx-auto mt-2 rounded-full group-hover:w-16 group-hover:animate-pulse transition-all duration-300"></div>
                 </div>
               </div>
             </AnimatedSection>
             
             <AnimatedSection className="relative" animation="slideLeft" delay={200}>
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-400/20 to-yellow-400/20 rounded-3xl transform rotate-6 animate-pulse"></div>
-                <div className="relative bg-white rounded-3xl shadow-2xl p-2 transform hover:rotate-0 transition-transform duration-700">
-                  <img 
-                    src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg" 
-                    alt="Luxury Property" 
-                    className="w-full h-96 lg:h-[500px] object-cover rounded-2xl"
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-400/20 to-yellow-400/20 rounded-3xl transform rotate-6 animate-pulse animate-glow"></div>
+                <div className="relative bg-white rounded-3xl shadow-2xl p-2 transform hover:rotate-0 transition-transform duration-700 animate-zoom-in" style={{ animationDelay: '0.4s' }}>
+                  <img
+                    src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg"
+                    alt="Luxury Property"
+                    className="w-full h-96 lg:h-[500px] object-cover rounded-2xl hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-lg">
+                  <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-lg animate-slide-from-top" style={{ animationDelay: '0.6s' }}>
                     <div className="flex items-center space-x-2">
                       <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                       <span className="text-sm font-semibold text-gray-800">Available Now</span>
                     </div>
                   </div>
-                  <div className="absolute bottom-6 right-6 bg-gradient-to-r from-amber-500 to-yellow-500 text-white p-6 rounded-2xl shadow-xl transform hover:scale-110 transition-transform duration-300">
+                  <div className="absolute bottom-6 right-6 bg-gradient-to-r from-amber-500 to-yellow-500 text-white p-6 rounded-2xl shadow-xl transform hover:scale-110 hover:rotate-3 transition-all duration-300 animate-zoom-in" style={{ animationDelay: '0.8s' }}>
                     <div className="text-2xl font-bold">₹2.5 Cr</div>
                     <div className="text-sm opacity-90">Premium Villa</div>
                   </div>
                 </div>
-                
+
                 {/* Floating Elements */}
-                <div className="absolute -top-4 -right-4 bg-white rounded-full p-4 shadow-lg animate-bounce">
+                <div className="absolute -top-4 -right-4 bg-white rounded-full p-4 shadow-lg animate-bounce hover:scale-125 transition-transform cursor-pointer animate-rotate-in" style={{ animationDelay: '1s' }}>
                   <Heart className="w-6 h-6 text-red-500" />
                 </div>
-                <div className="absolute -bottom-4 -left-4 bg-white rounded-full p-4 shadow-lg animate-bounce" style={{animationDelay: '1s'}}>
+                <div className="absolute -bottom-4 -left-4 bg-white rounded-full p-4 shadow-lg animate-bounce hover:scale-125 transition-transform cursor-pointer animate-rotate-in" style={{animationDelay: '1.2s'}}>
                   <Eye className="w-6 h-6 text-blue-500" />
                 </div>
               </div>
