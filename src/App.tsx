@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  ChevronDown, Phone, Mail, MapPin, Home, Building, Users, Award, 
+import {
+  ChevronDown, Phone, Mail, MapPin, Home, Building, Users, Award,
   ArrowRight, Star, CheckCircle, MessageCircle, Menu, X, Play, Pause,
   ChevronLeft, ChevronRight, Search, Filter, Eye, Heart, Share2
 } from 'lucide-react';
@@ -11,12 +11,14 @@ import { PropertyCarousel } from './components/PropertyCarousel';
 import { FilterPanel } from './components/FilterPanel';
 import { FloatingLabelInput, FloatingLabelTextarea } from './components/FloatingLabels';
 import { TestimonialSlider } from './components/TestimonialSlider';
+import { FeedbackModal } from './components/FeedbackModal';
 import { emailEnquiryService } from './lib/supabase';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeProperty, setActiveProperty] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const [contactForm, setContactForm] = useState({
     firstName: '',
     lastName: '',
@@ -779,6 +781,18 @@ Best regards`);
           </div>
         </div>
       </footer>
+
+      {/* Floating Feedback Button */}
+      <button
+        onClick={() => setIsFeedbackOpen(true)}
+        className="fixed bottom-8 right-8 bg-gradient-to-r from-amber-500 to-yellow-500 text-white p-4 rounded-full shadow-2xl hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 transform hover:scale-110 z-40 flex items-center space-x-2 group"
+      >
+        <Star className="w-6 h-6 fill-current" />
+        <span className="hidden group-hover:inline-block font-semibold pr-2">Feedback</span>
+      </button>
+
+      {/* Feedback Modal */}
+      <FeedbackModal isOpen={isFeedbackOpen} onClose={() => setIsFeedbackOpen(false)} />
     </div>
   );
 }

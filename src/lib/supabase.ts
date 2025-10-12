@@ -119,6 +119,15 @@ export interface EmailEnquiry {
   updated_at: string;
 }
 
+export interface Feedback {
+  id: string;
+  name: string;
+  email: string;
+  rating: number;
+  message: string;
+  created_at: string;
+}
+
 // Database Functions
 export const propertyService = {
   // Get all properties with optional filters
@@ -335,15 +344,40 @@ export const emailEnquiryService = {
   async updateEnquiryStatus(id: string, status: EmailEnquiry['status']) {
     const { data, error } = await supabase
       .from('email_enquiries')
-      .update({ 
+      .update({
         status,
         updated_at: new Date().toISOString()
       })
       .eq('id', id)
       .select()
       .single();
-    
+
     if (error) throw error;
     return data as EmailEnquiry;
+  }
+};
+
+export const feedbackService = {
+  // Submit new feedback
+  async submitFeedback(feedback: Omit<Feedback, 'id' | 'created_at'>) {
+    const { data, error } = await supabase
+      .from('feedback')
+      .insert([feedback])
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data as Feedback;
+  },
+
+  // Get all feedback (admin only)
+  async getFeedback() {
+    const { data, error } = await supabase
+      .from('feedback')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return data as Feedback[];
   }
 };
