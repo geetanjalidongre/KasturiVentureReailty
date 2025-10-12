@@ -60,7 +60,7 @@ Best regards`);
 
   const handleWhatsAppInquiry = () => {
     const message = encodeURIComponent('Hi Manoj, I am interested in your properties. Can you please share more details?');
-    
+
     emailEnquiryService.submitEmailEnquiry({
       sender_name: 'Website Visitor',
       sender_email: 'visitor@example.com',
@@ -68,8 +68,8 @@ Best regards`);
       message: 'Hi Manoj, I am interested in your properties. Can you please share more details?',
       enquiry_source: 'whatsapp'
     }).catch(console.error);
-    
-    window.open(`https://wa.me/919876543210?text=${message}`, '_blank');
+
+    window.open(`https://wa.me/919987739999?text=${message}`, '_blank');
   };
 
 useEffect(() => {
