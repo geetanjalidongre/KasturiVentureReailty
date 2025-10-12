@@ -275,7 +275,7 @@ useEffect(() => {
                   <div className="flex space-x-3">
                     <button
                       onClick={handleEmailInquiry}
-                      className="flex items-center space-x-2 bg-blue-600 text-white px-6 py-4 rounded-full hover:bg-blue-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 hover:rotate-3"
+                      className="flex items-center space-x-2 bg-blue-600 text-white px-6 py-4 rounded-full hover:bg-blue-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 hover:rotate-3 animate-zoom-in" style={{ animationDelay: '0.6s' }}
                     >
                       <Mail className="w-5 h-5" />
                       <span>Email Us</span>
@@ -283,7 +283,7 @@ useEffect(() => {
 
                     <button
                       onClick={handleWhatsAppInquiry}
-                      className="flex items-center space-x-2 bg-green-600 text-white px-6 py-4 rounded-full hover:bg-green-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 hover:-rotate-3"
+                      className="flex items-center space-x-2 bg-green-600 text-white px-6 py-4 rounded-full hover:bg-green-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 hover:-rotate-3 animate-zoom-in" style={{ animationDelay: '0.7s' }}
                     >
                       <MessageCircle className="w-5 h-5" />
                       <span>WhatsApp</span>
@@ -575,7 +575,7 @@ useEffect(() => {
                       <div className="text-amber-600 font-medium">Manoj Shrivastav</div>
                       <button
                         onClick={handleWhatsAppInquiry}
-                        className="flex items-center space-x-1 text-green-600 hover:text-green-700 transition-colors mt-2 text-sm font-medium"
+                        className="flex items-center space-x-1 text-green-600 hover:text-green-700 transition-all duration-300 mt-2 text-sm font-medium hover:translate-x-1 hover:scale-105"
                       >
                         <MessageCircle className="w-4 h-4" />
                         <span>WhatsApp</span>
@@ -590,9 +590,9 @@ useEffect(() => {
                     <div>
                       <div className="font-semibold text-gray-900 text-lg">Email</div>
                       <div className="text-gray-600 text-lg">Kasturiventures99@gmail.com</div>
-                      <button 
+                      <button
                         onClick={handleEmailInquiry}
-                        className="text-blue-600 hover:text-blue-700 transition-colors text-sm font-medium"
+                        className="text-blue-600 hover:text-blue-700 transition-all duration-300 text-sm font-medium hover:translate-x-1 hover:scale-105"
                       >
                         Send Email
                       </button>
@@ -733,15 +733,20 @@ useEffect(() => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <footer className="bg-gray-900 text-white py-16 relative overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-10 left-10 w-32 h-32 bg-amber-400 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute bottom-20 right-20 w-40 h-40 bg-yellow-400 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="md:col-span-2">
-              <div className="flex items-center space-x-4 mb-6">
-                <img 
-                  src="/kasturi logo 2.jpg" 
-                  alt="Kasturi Reality Venture" 
-                  className="h-16 w-auto rounded-lg"
+            <div className="md:col-span-2 animate-zoom-in" style={{ animationDelay: '0.2s' }}>
+              <div className="flex items-center space-x-4 mb-6 group">
+                <img
+                  src="/kasturi logo 2.jpg"
+                  alt="Kasturi Reality Venture"
+                  className="h-16 w-auto rounded-lg group-hover:scale-110 transition-transform duration-300 hover:rotate-6"
                 />
                 <div>
                   <h3 className="text-2xl font-bold bg-gradient-to-r from-amber-400 to-yellow-400 bg-clip-text text-transparent">
@@ -755,19 +760,25 @@ useEffect(() => {
               </p>
             </div>
             
-            <div>
-              <h4 className="text-lg font-bold mb-6">Quick Links</h4>
+            <div className="animate-zoom-in" style={{ animationDelay: '0.4s' }}>
+              <h4 className="text-lg font-bold mb-6 flex items-center">
+                <div className="w-1 h-6 bg-gradient-to-b from-amber-400 to-yellow-400 mr-3 rounded-full"></div>
+                Quick Links
+              </h4>
               <ul className="space-y-3 text-gray-400">
-                <li><a href="#home" className="hover:text-amber-400 transition-colors">Home</a></li>
-                <li><a href="#properties" className="hover:text-amber-400 transition-colors">Properties</a></li>
-                <li><a href="#services" className="hover:text-amber-400 transition-colors">Services</a></li>
-                <li><a href="#about" className="hover:text-amber-400 transition-colors">About</a></li>
-                <li><a href="#contact" className="hover:text-amber-400 transition-colors">Contact</a></li>
+                <li><a href="#home" className="hover:text-amber-400 transition-all duration-300 hover:translate-x-2 inline-block">Home</a></li>
+                <li><a href="#properties" className="hover:text-amber-400 transition-all duration-300 hover:translate-x-2 inline-block">Properties</a></li>
+                <li><a href="#services" className="hover:text-amber-400 transition-all duration-300 hover:translate-x-2 inline-block">Services</a></li>
+                <li><a href="#about" className="hover:text-amber-400 transition-all duration-300 hover:translate-x-2 inline-block">About</a></li>
+                <li><a href="#contact" className="hover:text-amber-400 transition-all duration-300 hover:translate-x-2 inline-block">Contact</a></li>
               </ul>
             </div>
             
-            <div>
-              <h4 className="text-lg font-bold mb-6">Services</h4>
+            <div className="animate-zoom-in" style={{ animationDelay: '0.6s' }}>
+              <h4 className="text-lg font-bold mb-6 flex items-center">
+                <div className="w-1 h-6 bg-gradient-to-b from-amber-400 to-yellow-400 mr-3 rounded-full"></div>
+                Services
+              </h4>
               <ul className="space-y-3 text-gray-400">
                 <li>Luxury Residences</li>
                 <li>Commercial Spaces</li>
@@ -777,21 +788,23 @@ useEffect(() => {
             </div>
           </div>
           
-          <div className="border-t border-gray-800 mt-12 pt-8">
+          <div className="border-t border-gray-800 mt-12 pt-8 animate-fade-in" style={{ animationDelay: '0.8s' }}>
             <div className="flex flex-col md:flex-row justify-between items-center">
               <p className="text-gray-400 text-sm">
                 &copy; 2024 Kasturi Reality Ventures. All rights reserved.
               </p>
               <div className="flex space-x-6 mt-4 md:mt-0">
-                <button 
+                <button
                   onClick={handleEmailInquiry}
-                  className="text-gray-400 hover:text-amber-400 transition-colors"
+                  className="text-gray-400 hover:text-amber-400 transition-all duration-300 hover:scale-125 hover:-rotate-12 animate-zoom-in"
+                  style={{ animationDelay: '0.2s' }}
                 >
                   <Mail className="w-5 h-5" />
                 </button>
-                <button 
+                <button
                   onClick={handleWhatsAppInquiry}
-                  className="text-gray-400 hover:text-green-400 transition-colors"
+                  className="text-gray-400 hover:text-green-400 transition-all duration-300 hover:scale-125 hover:rotate-12 animate-zoom-in"
+                  style={{ animationDelay: '0.3s' }}
                 >
                   <MessageCircle className="w-5 h-5" />
                 </button>
@@ -804,7 +817,7 @@ useEffect(() => {
       {/* Floating Feedback Button */}
       <button
         onClick={() => setIsFeedbackOpen(true)}
-        className="fixed bottom-8 right-8 bg-gradient-to-r from-amber-500 to-yellow-500 text-white p-4 rounded-full shadow-2xl hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 transform hover:scale-110 z-40 flex items-center space-x-2 group"
+        className="fixed bottom-8 right-8 bg-gradient-to-r from-amber-500 to-yellow-500 text-white p-4 rounded-full shadow-2xl hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 transform hover:scale-110 z-40 flex items-center space-x-2 group animate-zoom-in animate-bounce hover:animate-pulse" style={{ animationDelay: '1s' }}
       >
         <Star className="w-6 h-6 fill-current" />
         <span className="hidden group-hover:inline-block font-semibold pr-2">Feedback</span>
