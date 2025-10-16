@@ -8,11 +8,19 @@ interface PropertyCardProps {
 }
 
 export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onViewDetails }) => {
+  const getImageUrl = () => {
+    if (property.image_url) return property.image_url;
+    if (property.images && Array.isArray(property.images) && property.images.length > 0) {
+      return property.images[0].startsWith('http') ? property.images[0] : `/${property.images[0]}`;
+    }
+    return 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg';
+  };
+
   return (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group">
       <div className="relative overflow-hidden h-64">
         <img
-          src={property.image_url || 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg'}
+          src={getImageUrl()}
           alt={property.title}
           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
         />
@@ -35,8 +43,8 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onViewDeta
           <h3 className="text-xl font-bold text-gray-800 group-hover:text-amber-600 transition-colors">
             {property.title}
           </h3>
-          <span className="text-2xl font-bold text-amber-600">
-            ₹{property.price?.toLocaleString()}
+          <span className="text-lg font-bold text-amber-600 whitespace-nowrap ml-2">
+            {property.price_display || (property.price ? `₹${property.price.toLocaleString()}` : 'Contact')}
           </span>
         </div>
 
@@ -62,10 +70,10 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onViewDeta
               <span>{property.bathrooms} Baths</span>
             </div>
           )}
-          {property.area && (
+          {(property.sqft || property.area) && (
             <div className="flex items-center">
               <Maximize className="w-4 h-4 mr-1" />
-              <span>{property.area} sqft</span>
+              <span>{property.sqft || property.area} sqft</span>
             </div>
           )}
         </div>

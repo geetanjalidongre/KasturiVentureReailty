@@ -13,8 +13,8 @@ interface FilterPanelProps {
 }
 
 export const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFilterChange }) => {
-  const propertyTypes = ['All', 'Residential', 'Commercial', 'Apartment', 'Villa'];
-  const locations = ['All', 'Mumbai', 'Pune', 'Bangalore', 'Delhi'];
+  const propertyTypes = ['All', 'Villa', 'Apartment', 'Commercial', 'Plot'];
+  const locations = ['All', 'Borivali West', 'Kandivali West', 'Malad West', 'Malad East'];
 
   return (
     <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">

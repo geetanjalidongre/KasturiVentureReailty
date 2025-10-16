@@ -79,7 +79,7 @@ useEffect(() => {
   const loadProperties = async () => {
     setIsLoadingProperties(true);
     try {
-      const data = await propertyService.getProperties();
+      const data = await propertyService.getAllProperties();
       setProperties(data);
     } catch (error) {
       console.error('Error loading properties:', error);
@@ -91,9 +91,9 @@ useEffect(() => {
   const filteredProperties = properties.filter(property => {
     if (filters.type !== 'All' && property.property_type !== filters.type) return false;
     if (filters.location !== 'All' && !property.location.includes(filters.location)) return false;
-    if (filters.minPrice && property.price < filters.minPrice) return false;
-    if (filters.maxPrice && property.price > filters.maxPrice) return false;
-    if (filters.bedrooms && property.bedrooms !== filters.bedrooms) return false;
+    if (filters.minPrice && property.price && property.price < filters.minPrice) return false;
+    if (filters.maxPrice && property.price && property.price > filters.maxPrice) return false;
+    if (filters.bedrooms && property.bedrooms && property.bedrooms < filters.bedrooms) return false;
     return true;
   });
 

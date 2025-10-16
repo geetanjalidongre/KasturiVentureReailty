@@ -53,16 +53,21 @@ export const PropertyCarousel: React.FC<PropertyCarouselProps> = ({
             }`}
           >
             <img
-              src={property.image_url || 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg'}
+              src={
+                property.image_url ||
+                (property.images && Array.isArray(property.images) && property.images.length > 0
+                  ? property.images[0].startsWith('http') ? property.images[0] : `/${property.images[0]}`
+                  : 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg')
+              }
               alt={property.title}
               className="w-full h-full object-cover"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
               <h3 className="text-2xl font-bold text-white mb-2">{property.title}</h3>
               <p className="text-white/90">{property.location}</p>
-              {property.price && (
-                <p className="text-amber-400 text-xl font-bold mt-2">₹{property.price.toLocaleString()}</p>
-              )}
+              <p className="text-amber-400 text-xl font-bold mt-2">
+                {property.price_display || (property.price ? `₹${property.price.toLocaleString()}` : 'Contact for Price')}
+              </p>
             </div>
           </div>
         ))}

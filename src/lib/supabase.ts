@@ -14,13 +14,20 @@ export interface Property {
   title: string;
   description?: string;
   price?: number;
+  price_display: string;
   location: string;
+  address?: string;
   property_type: string;
   bedrooms?: number;
   bathrooms?: number;
-  area?: number;
+  sqft?: number;
+  status?: string;
+  featured?: boolean;
+  images?: string[] | any;
+  amenities?: any;
   image_url?: string;
   created_at: string;
+  updated_at?: string;
 }
 
 export interface Feedback {
