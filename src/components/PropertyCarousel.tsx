@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
+import { Property } from '../lib/supabase';
 
 interface PropertyCarouselProps {
-  images: string[];
+  properties: Property[];
   autoPlay?: boolean;
   interval?: number;
 }
 
 export const PropertyCarousel: React.FC<PropertyCarouselProps> = ({
-  images,
+  properties,
   autoPlay = true,
   interval = 5000
 }) => {
@@ -16,38 +17,53 @@ export const PropertyCarousel: React.FC<PropertyCarouselProps> = ({
   const [isPlaying, setIsPlaying] = useState(autoPlay);
 
   useEffect(() => {
-    if (!isPlaying) return;
+    if (!isPlaying || !properties || properties.length === 0) return;
 
     const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
+      setCurrentIndex((prev) => (prev + 1) % properties.length);
     }, interval);
 
     return () => clearInterval(timer);
-  }, [isPlaying, images.length, interval]);
+  }, [isPlaying, properties, interval]);
 
   const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+    setCurrentIndex((prev) => (prev - 1 + properties.length) % properties.length);
   };
 
   const goToNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
+    setCurrentIndex((prev) => (prev + 1) % properties.length);
   };
 
+  if (!properties || properties.length === 0) {
+    return (
+      <div className="relative w-full h-96 bg-gray-200 rounded-2xl flex items-center justify-center">
+        <p className="text-gray-500">No featured properties available</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="relative w-full h-full group">
-      <div className="overflow-hidden rounded-2xl h-full">
-        {images.map((image, index) => (
+    <div className="relative w-full h-96 group">
+      <div className="overflow-hidden rounded-2xl h-full relative">
+        {properties.map((property, index) => (
           <div
-            key={index}
+            key={property.id}
             className={`absolute inset-0 transition-opacity duration-700 ${
               index === currentIndex ? 'opacity-100' : 'opacity-0'
             }`}
           >
             <img
-              src={image}
-              alt={`Property ${index + 1}`}
+              src={property.image_url || 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg'}
+              alt={property.title}
               className="w-full h-full object-cover"
             />
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+              <h3 className="text-2xl font-bold text-white mb-2">{property.title}</h3>
+              <p className="text-white/90">{property.location}</p>
+              {property.price && (
+                <p className="text-amber-400 text-xl font-bold mt-2">₹{property.price.toLocaleString()}</p>
+              )}
+            </div>
           </div>
         ))}
       </div>
@@ -73,8 +89,8 @@ export const PropertyCarousel: React.FC<PropertyCarouselProps> = ({
         {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
       </button>
 
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
-        {images.map((_, index) => (
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-10">
+        {properties.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}

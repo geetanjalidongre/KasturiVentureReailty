@@ -368,7 +368,7 @@ useEffect(() => {
           </AnimatedSection>
           
           <AnimatedSection delay={300}>
-            <FilterPanel />
+            <FilterPanel filters={filters} onFilterChange={setFilters} />
           </AnimatedSection>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
@@ -383,7 +383,7 @@ useEffect(() => {
             ) : (
               filteredProperties.map((property, index) => (
                 <AnimatedSection key={property.id} delay={index * 100} animation="fadeUp">
-                  <PropertyCard property={property} index={index} />
+                  <PropertyCard property={property} />
                 </AnimatedSection>
               ))
             )}
