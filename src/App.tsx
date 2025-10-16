@@ -59,17 +59,17 @@ Best regards`);
   };
 
   const handleWhatsAppInquiry = () => {
-    const message = encodeURIComponent('Hi, I am interested in PARAM project in Borivali West. Can you please share more details?');
+    const message = encodeURIComponent('Hi Manoj, I am interested in your properties. Can you please share more details?');
 
     emailEnquiryService.submitEmailEnquiry({
       sender_name: 'Website Visitor',
       sender_email: 'visitor@example.com',
-      subject: 'WhatsApp Inquiry - PARAM Borivali West',
-      message: 'Hi, I am interested in PARAM project in Borivali West. Can you please share more details?',
+      subject: 'WhatsApp Inquiry - Kasturi Reality Venture',
+      message: 'Hi Manoj, I am interested in your properties. Can you please share more details?',
       enquiry_source: 'whatsapp'
     }).catch(console.error);
 
-    window.open(`https://wa.me/918976651018?text=${message}`, '_blank');
+    window.open(`https://wa.me/919987739999?text=${message}`, '_blank');
   };
 
 useEffect(() => {
@@ -255,23 +255,16 @@ useEffect(() => {
                   Premium Real Estate Since 2019
                 </div>
 
-                <h1 className="text-4xl lg:text-6xl font-bold leading-tight animate-slide-from-top">
-                  <span className="block text-white">PARAM</span>
+                <h1 className="text-5xl lg:text-7xl font-bold leading-tight animate-slide-from-top">
+                  <span className="block text-white">Discover Your</span>
                   <span className="block bg-gradient-to-r from-amber-400 via-yellow-400 to-orange-400 bg-clip-text text-transparent animate-gradient">
-                    The Benchmark of Luxury
+                    Dream Property
                   </span>
-                  <span className="block text-white text-2xl lg:text-3xl mt-2">in Borivali West</span>
                 </h1>
 
-                <div className="text-lg lg:text-xl text-gray-200 leading-relaxed max-w-2xl animate-fade-in space-y-3" style={{ animationDelay: '0.3s' }}>
-                  <p className="font-semibold text-amber-300">Presented by Sumit Group & KMR Group</p>
-                  <p>Experience Signature Living with Luxurious 2 & 3 BHK Residences, Premium 4 BHK & Exclusive Duplex Abodes</p>
-                  <div className="flex flex-wrap gap-2 text-sm lg:text-base">
-                    <span className="bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">Spacious Homes with Private Decks</span>
-                    <span className="bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">30+ Amenities</span>
-                    <span className="bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">Metro: 2 mins</span>
-                  </div>
-                </div>
+                <p className="text-xl lg:text-2xl text-gray-200 leading-relaxed max-w-2xl animate-fade-in" style={{ animationDelay: '0.3s' }}>
+                  Experience luxury living with Kasturi Reality Venture. We create exceptional residential and commercial spaces that blend modern elegance with timeless sophistication.
+                </p>
                 
                 <div className="flex flex-col sm:flex-row gap-4 pt-4 animate-zoom-in" style={{ animationDelay: '0.5s' }}>
                   <button className="group bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-8 py-4 rounded-full hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 font-semibold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 flex items-center justify-center hover:animate-pulse">
@@ -329,8 +322,8 @@ useEffect(() => {
                 <div className="absolute inset-0 bg-gradient-to-r from-amber-400/20 to-yellow-400/20 rounded-3xl transform rotate-6 animate-pulse animate-glow"></div>
                 <div className="relative bg-white rounded-3xl shadow-2xl p-2 transform hover:rotate-0 transition-transform duration-700 animate-zoom-in" style={{ animationDelay: '0.4s' }}>
                   <img
-                    src="/property 2 copy copy copy.jpg"
-                    alt="PARAM - Luxury Residences in Borivali West"
+                    src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg"
+                    alt="Luxury Property"
                     className="w-full h-96 lg:h-[500px] object-cover rounded-2xl hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-lg animate-slide-from-top" style={{ animationDelay: '0.6s' }}>
@@ -339,27 +332,14 @@ useEffect(() => {
                       <span className="text-sm font-semibold text-gray-800">Available Now</span>
                     </div>
                   </div>
-                  <div className="absolute bottom-6 left-6 right-6 bg-gradient-to-r from-amber-500/95 to-yellow-500/95 backdrop-blur-sm text-white p-4 rounded-2xl shadow-xl animate-slide-from-bottom" style={{ animationDelay: '0.8s' }}>
-                    <div className="text-xs font-semibold mb-1">MAHA RERA: P51800076840</div>
-                    <div className="text-lg font-bold">2, 3 & 4 BHK + Duplex</div>
-                    <div className="text-sm opacity-90">748 - 1584 sq. ft.</div>
-                    <a
-                      href="https://maharera.mahaonline.gov.in/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs underline hover:text-amber-100 transition-colors mt-1 inline-block"
-                    >
-                      View on MahaRERA
-                    </a>
-                  </div>
                 </div>
 
                 {/* Floating Elements */}
                 <div className="absolute -top-4 -right-4 bg-white rounded-full p-4 shadow-lg animate-bounce hover:scale-125 transition-transform cursor-pointer animate-rotate-in" style={{ animationDelay: '1s' }}>
-                  <Building className="w-6 h-6 text-amber-500" />
+                  <Heart className="w-6 h-6 text-red-500" />
                 </div>
                 <div className="absolute -bottom-4 -left-4 bg-white rounded-full p-4 shadow-lg animate-bounce hover:scale-125 transition-transform cursor-pointer animate-rotate-in" style={{animationDelay: '1.2s'}}>
-                  <Home className="w-6 h-6 text-blue-500" />
+                  <Eye className="w-6 h-6 text-blue-500" />
                 </div>
               </div>
             </AnimatedSection>
