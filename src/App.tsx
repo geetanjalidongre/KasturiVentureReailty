@@ -332,10 +332,6 @@ useEffect(() => {
                       <span className="text-sm font-semibold text-gray-800">Available Now</span>
                     </div>
                   </div>
-                  <div className="absolute bottom-6 right-6 bg-gradient-to-r from-amber-500 to-yellow-500 text-white p-6 rounded-2xl shadow-xl transform hover:scale-110 hover:rotate-3 transition-all duration-300 animate-zoom-in" style={{ animationDelay: '0.8s' }}>
-                    <div className="text-2xl font-bold">₹2.5 Cr</div>
-                    <div className="text-sm opacity-90">Premium Villa</div>
-                  </div>
                 </div>
 
                 {/* Floating Elements */}
