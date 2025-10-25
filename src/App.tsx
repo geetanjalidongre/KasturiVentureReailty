@@ -59,7 +59,7 @@ Best regards`);
   };
 
   const handleWhatsAppInquiry = () => {
-    const message = encodeURIComponent('Hi Manoj, I am interested in your properties. Can you please share more details?');
+    const message = encodeURIComponent('Hi, I am interested in your properties. Can you please share more details?');
 
     emailEnquiryService.submitEmailEnquiry({
       sender_name: 'Website Visitor',
@@ -201,7 +201,7 @@ useEffect(() => {
                 className="hidden md:flex items-center space-x-2 bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-3 rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
               >
                 <MessageCircle className="w-5 h-5" />
-                <span>Chat on WhatsApp</span>
+                <span>Chat</span>
               </button>
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -226,7 +226,7 @@ useEffect(() => {
               className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-3 rounded-full font-medium"
             >
               <MessageCircle className="w-5 h-5" />
-              <span>Chat on WhatsApp</span>
+              <span>Chat</span>
             </button>
           </div>
         </div>
