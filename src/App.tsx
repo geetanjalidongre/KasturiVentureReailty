@@ -326,12 +326,6 @@ useEffect(() => {
                     alt="Luxury Property"
                     className="w-full h-96 lg:h-[500px] object-cover rounded-2xl hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-lg animate-slide-from-top" style={{ animationDelay: '0.6s' }}>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                      <span className="text-sm font-semibold text-gray-800">Available Now</span>
-                    </div>
-                  </div>
                 </div>
 
                 {/* Floating Elements */}
