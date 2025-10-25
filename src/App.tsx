@@ -198,7 +198,7 @@ useEffect(() => {
             <div className="flex items-center space-x-4">
               <button
                 onClick={handleWhatsAppInquiry}
-                className="hidden md:flex items-center space-x-2 bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-3 rounded-full hover:from-green-600 hover:to-green-700 transition-all duration-300 font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
+                className="hidden md:flex items-center space-x-2 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-6 py-3 rounded-full hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 font-medium shadow-lg hover:shadow-xl transform hover:scale-105"
               >
                 <MessageCircle className="w-5 h-5" />
                 <span>Chat</span>
@@ -223,7 +223,7 @@ useEffect(() => {
             <a href="#contact" className="block text-gray-800 hover:text-amber-600 transition-colors font-medium">Contact</a>
             <button
               onClick={handleWhatsAppInquiry}
-              className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-3 rounded-full font-medium"
+              className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-6 py-3 rounded-full font-medium"
             >
               <MessageCircle className="w-5 h-5" />
               <span>Chat</span>
