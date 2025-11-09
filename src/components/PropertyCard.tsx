@@ -40,7 +40,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onViewDeta
 
       <div className="p-6 flex flex-col flex-grow">
         <div className="flex items-start justify-between mb-3">
-          <h3 className="text-xl font-bold text-gray-800 group-hover:text-amber-600 transition-colors">
+          <h3 className="text-xl font-bold text-gray-800 group-hover:text-amber-600 transition-colors uppercase">
             {property.title}
           </h3>
           <span className="text-lg font-bold text-amber-600 whitespace-nowrap ml-2">
