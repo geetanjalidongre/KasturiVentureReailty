@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Bed, Bath, Maximize, Heart, Eye, Share2 } from 'lucide-react';
+import { MapPin, Bed, Bath, Maximize, Eye } from 'lucide-react';
 import { Property } from '../lib/supabase';
 
 interface PropertyCardProps {
@@ -8,36 +8,8 @@ interface PropertyCardProps {
 }
 
 export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onViewDetails }) => {
-  const getImageUrl = () => {
-    if (property.images && Array.isArray(property.images) && property.images.length > 0) {
-      const firstImage = property.images[0];
-      return firstImage.startsWith('http') ? firstImage : `/${firstImage}`;
-    }
-    return 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg';
-  };
-
   return (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group">
-      <div className="relative overflow-hidden h-64">
-        <img
-          src={getImageUrl()}
-          alt={property.title}
-          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-        />
-        <div className="absolute top-4 left-4 bg-amber-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
-          {property.property_type}
-        </div>
-        <div className="absolute top-4 right-4 flex space-x-2">
-          <button className="bg-white/90 backdrop-blur-sm p-2 rounded-full hover:bg-amber-500 hover:text-white transition-colors">
-            <Heart className="w-4 h-4" />
-          </button>
-          <button className="bg-white/90 backdrop-blur-sm p-2 rounded-full hover:bg-amber-500 hover:text-white transition-colors">
-            <Share2 className="w-4 h-4" />
-          </button>
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      </div>
-
       <div className="p-6">
         <div className="flex items-start justify-between mb-3">
           <h3 className="text-xl font-bold text-gray-800 group-hover:text-amber-600 transition-colors">
@@ -53,8 +25,12 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onViewDeta
           <span className="text-sm">{property.location}</span>
         </div>
 
+        <div className="bg-amber-500 text-white px-4 py-1 rounded-full text-sm font-semibold inline-block mb-4">
+          {property.property_type}
+        </div>
+
         {property.description && (
-          <p className="text-gray-600 mb-4 line-clamp-2">{property.description}</p>
+          <p className="text-gray-600 mb-4">{property.description}</p>
         )}
 
         <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
