@@ -9,9 +9,9 @@ interface PropertyCardProps {
 
 export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onViewDetails }) => {
   const getImageUrl = () => {
-    if (property.image_url) return property.image_url;
     if (property.images && Array.isArray(property.images) && property.images.length > 0) {
-      return property.images[0].startsWith('http') ? property.images[0] : `/${property.images[0]}`;
+      const firstImage = property.images[0];
+      return firstImage.startsWith('http') ? firstImage : `/${firstImage}`;
     }
     return 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg';
   };

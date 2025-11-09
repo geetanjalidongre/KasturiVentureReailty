@@ -21,11 +21,11 @@ export interface Property {
   bedrooms?: number;
   bathrooms?: number;
   sqft?: number;
+  area?: number;
   status?: string;
   featured?: boolean;
   images?: string[] | any;
   amenities?: any;
-  image_url?: string;
   created_at: string;
   updated_at?: string;
 }
