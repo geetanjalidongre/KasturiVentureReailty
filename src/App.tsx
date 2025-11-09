@@ -13,6 +13,7 @@ import { FloatingLabelInput, FloatingLabelTextarea } from './components/Floating
 import { TestimonialSlider } from './components/TestimonialSlider';
 import { FeedbackModal } from './components/FeedbackModal';
 import { FeedbackViewer } from './components/FeedbackViewer';
+import { PropertyDetailModal } from './components/PropertyDetailModal';
 import { emailEnquiryService, propertyService, Property } from './lib/supabase';
 
 function App() {
@@ -21,6 +22,8 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const [isFeedbackViewerOpen, setIsFeedbackViewerOpen] = useState(false);
+  const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
+  const [isPropertyDetailOpen, setIsPropertyDetailOpen] = useState(false);
   const [properties, setProperties] = useState<Property[]>([]);
   const [isLoadingProperties, setIsLoadingProperties] = useState(true);
   const [filters, setFilters] = useState({
@@ -385,7 +388,13 @@ useEffect(() => {
             ) : (
               filteredProperties.map((property, index) => (
                 <AnimatedSection key={property.id} delay={index * 100} animation="fadeUp">
-                  <PropertyCard property={property} />
+                  <PropertyCard
+                    property={property}
+                    onViewDetails={(prop) => {
+                      setSelectedProperty(prop);
+                      setIsPropertyDetailOpen(true);
+                    }}
+                  />
                 </AnimatedSection>
               ))
             )}
@@ -826,6 +835,16 @@ useEffect(() => {
 
       {/* Feedback Viewer Modal */}
       <FeedbackViewer isOpen={isFeedbackViewerOpen} onClose={() => setIsFeedbackViewerOpen(false)} />
+
+      {/* Property Detail Modal */}
+      <PropertyDetailModal
+        property={selectedProperty}
+        isOpen={isPropertyDetailOpen}
+        onClose={() => {
+          setIsPropertyDetailOpen(false);
+          setSelectedProperty(null);
+        }}
+      />
     </div>
   );
 }
