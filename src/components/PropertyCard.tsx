@@ -17,8 +17,8 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onViewDeta
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group">
-      <div className="relative overflow-hidden h-64">
+    <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group h-full flex flex-col">
+      <div className="relative overflow-hidden h-64 flex-shrink-0">
         <img
           src={getImageUrl()}
           alt={property.title}
@@ -38,9 +38,9 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onViewDeta
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
 
-      <div className="p-6">
+      <div className="p-6 flex flex-col flex-grow">
         <div className="flex items-start justify-between mb-3">
-          <h3 className="text-xl font-bold text-gray-800 group-hover:text-amber-600 transition-colors">
+          <h3 className="text-xl font-bold text-gray-800 group-hover:text-amber-600 transition-colors line-clamp-2">
             {property.title}
           </h3>
           <span className="text-lg font-bold text-amber-600 whitespace-nowrap ml-2">
@@ -49,12 +49,12 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onViewDeta
         </div>
 
         <div className="flex items-center text-gray-600 mb-4">
-          <MapPin className="w-4 h-4 mr-2" />
-          <span className="text-sm">{property.location}</span>
+          <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
+          <span className="text-sm line-clamp-1">{property.location}</span>
         </div>
 
         {property.description && (
-          <p className="text-gray-600 mb-4 line-clamp-2">{property.description}</p>
+          <p className="text-gray-600 mb-4 line-clamp-2 flex-grow">{property.description}</p>
         )}
 
         <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
@@ -80,7 +80,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onViewDeta
 
         <button
           onClick={() => onViewDetails?.(property)}
-          className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-3 rounded-lg hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 font-semibold flex items-center justify-center group"
+          className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-3 rounded-lg hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 font-semibold flex items-center justify-center group mt-auto"
         >
           <Eye className="w-4 h-4 mr-2" />
           View Details
