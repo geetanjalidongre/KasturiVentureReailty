@@ -8,7 +8,12 @@ interface PropertyCardProps {
 }
 
 export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onViewDetails }) => {
+  const [imgError, setImgError] = React.useState(false);
+
   const getImageUrl = () => {
+    if (imgError) {
+      return 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg';
+    }
     if (property.images && Array.isArray(property.images) && property.images.length > 0) {
       const firstImage = property.images[0];
       return firstImage.startsWith('http') ? firstImage : `/${firstImage}`;
@@ -22,6 +27,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onViewDeta
         <img
           src={getImageUrl()}
           alt={property.title}
+          onError={() => setImgError(true)}
           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
         />
         <div className="absolute top-4 left-4 bg-amber-500 text-white px-4 py-1 rounded-full text-sm font-semibold">

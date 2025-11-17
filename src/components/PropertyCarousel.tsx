@@ -15,6 +15,7 @@ export const PropertyCarousel: React.FC<PropertyCarouselProps> = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(autoPlay);
+  const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     if (!isPlaying || !properties || properties.length === 0) return;
@@ -54,11 +55,14 @@ export const PropertyCarousel: React.FC<PropertyCarouselProps> = ({
           >
             <img
               src={
-                property.images && Array.isArray(property.images) && property.images.length > 0
-                  ? (property.images[0].startsWith('http') ? property.images[0] : `/${property.images[0]}`)
-                  : 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg'
+                imageErrors[property.id]
+                  ? 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg'
+                  : (property.images && Array.isArray(property.images) && property.images.length > 0
+                      ? (property.images[0].startsWith('http') ? property.images[0] : `/${property.images[0]}`)
+                      : 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg')
               }
               alt={property.title}
+              onError={() => setImageErrors(prev => ({ ...prev, [property.id]: true }))}
               className="w-full h-full object-cover"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">

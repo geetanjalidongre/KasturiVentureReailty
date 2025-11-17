@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, MapPin, Bed, Bath, Maximize, Calendar, Building2, Home, Phone, Mail, MessageCircle, ChevronLeft, ChevronRight, Share2, Heart } from 'lucide-react';
+import { X, MapPin, Bed, Bath, Maximize, Calendar, Building2, Home, Phone, Mail, MessageCircle, ChevronLeft, ChevronRight, Share2, Heart, CheckCircle } from 'lucide-react';
 import { Property } from '../lib/supabase';
 
 interface PropertyDetailModalProps {
@@ -10,10 +10,11 @@ interface PropertyDetailModalProps {
 
 export const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({ property, isOpen, onClose }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imageError, setImageError] = useState(false);
 
   if (!isOpen || !property) return null;
 
-  const images = property.images && Array.isArray(property.images) && property.images.length > 0
+  const images = property.images && Array.isArray(property.images) && property.images.length > 0 && !imageError
     ? property.images.map(img => img.startsWith('http') ? img : `/${img}`)
     : ['https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg'];
 
@@ -54,6 +55,7 @@ export const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({ proper
               <img
                 src={images[currentImageIndex]}
                 alt={property.title}
+                onError={() => setImageError(true)}
                 className="w-full h-full object-cover rounded-t-3xl lg:rounded-l-3xl lg:rounded-tr-none"
               />
 
