@@ -10,12 +10,18 @@ interface PropertyDetailModalProps {
 
 export const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({ property, isOpen, onClose }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [imageError, setImageError] = useState(false);
+  const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
 
   if (!isOpen || !property) return null;
 
-  const images = property.images && Array.isArray(property.images) && property.images.length > 0 && !imageError
+  const propertyImages = property.images && Array.isArray(property.images) && property.images.length > 0
     ? property.images.map(img => img.startsWith('http') ? img : `/${img}`)
+    : [];
+
+  const images = propertyImages.length > 0
+    ? propertyImages.map((img, idx) =>
+        imageErrors[idx] ? 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg' : img
+      )
     : ['https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg'];
 
   const nextImage = () => {
@@ -55,7 +61,7 @@ export const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({ proper
               <img
                 src={images[currentImageIndex]}
                 alt={property.title}
-                onError={() => setImageError(true)}
+                onError={() => setImageErrors(prev => ({ ...prev, [currentImageIndex]: true }))}
                 className="w-full h-full object-cover rounded-t-3xl lg:rounded-l-3xl lg:rounded-tr-none"
               />
 
