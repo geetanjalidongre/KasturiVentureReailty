@@ -66,18 +66,19 @@ export const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({ proper
     >
       <div className="min-h-screen flex items-center justify-center px-4 py-8">
         <div
-          className="relative max-w-6xl w-full bg-white rounded-3xl shadow-2xl animate-zoom-in"
-          style={{ minHeight: '400px' }}
+          className="relative max-w-6xl w-full bg-white rounded-3xl shadow-2xl"
+          style={{ minHeight: '500px', backgroundColor: 'white', padding: '0' }}
           onClick={(e) => e.stopPropagation()}
         >
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 z-10 bg-white/90 backdrop-blur-sm p-3 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300 shadow-lg hover:scale-110"
+            className="absolute top-4 right-4 z-10 bg-red-500 text-white p-3 rounded-full hover:bg-red-600 transition-all duration-300 shadow-lg hover:scale-110"
+            style={{ zIndex: 9999 }}
           >
             <X className="w-6 h-6" />
           </button>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0" style={{ minHeight: '500px' }}>
             <div className="relative h-96 lg:h-full min-h-[400px]">
               <img
                 src={images[currentImageIndex]}
