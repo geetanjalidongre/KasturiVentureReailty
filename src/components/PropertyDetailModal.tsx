@@ -46,9 +46,9 @@ export const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({ proper
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-sm animate-fade-in">
-      <div className="min-h-screen px-4 py-8">
-        <div className="relative max-w-6xl mx-auto bg-white rounded-3xl shadow-2xl animate-zoom-in">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-sm animate-fade-in" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div className="w-full px-4 py-8">
+        <div className="relative max-w-6xl mx-auto bg-white rounded-3xl shadow-2xl animate-zoom-in" style={{ minHeight: '400px' }}>
           <button
             onClick={onClose}
             className="absolute top-4 right-4 z-10 bg-white/90 backdrop-blur-sm p-3 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300 shadow-lg hover:scale-110"
