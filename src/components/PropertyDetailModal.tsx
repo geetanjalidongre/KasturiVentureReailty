@@ -12,6 +12,8 @@ export const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({ proper
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
 
+  console.log('PropertyDetailModal - isOpen:', isOpen, 'property:', property);
+
   if (!isOpen || !property) return null;
 
   const propertyImages = property.images && Array.isArray(property.images) && property.images.length > 0
@@ -23,6 +25,9 @@ export const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({ proper
         imageErrors[idx] ? 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg' : img
       )
     : ['https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg'];
+
+  console.log('Images to render:', images);
+  console.log('Property title:', property.title);
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % images.length);
@@ -46,9 +51,25 @@ export const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({ proper
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-sm animate-fade-in" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div className="w-full px-4 py-8">
-        <div className="relative max-w-6xl mx-auto bg-white rounded-3xl shadow-2xl animate-zoom-in" style={{ minHeight: '400px' }}>
+    <div
+      className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm animate-fade-in"
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        overflowY: 'auto',
+        zIndex: 9999
+      }}
+      onClick={onClose}
+    >
+      <div className="min-h-screen flex items-center justify-center px-4 py-8">
+        <div
+          className="relative max-w-6xl w-full bg-white rounded-3xl shadow-2xl animate-zoom-in"
+          style={{ minHeight: '400px' }}
+          onClick={(e) => e.stopPropagation()}
+        >
           <button
             onClick={onClose}
             className="absolute top-4 right-4 z-10 bg-white/90 backdrop-blur-sm p-3 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300 shadow-lg hover:scale-110"
