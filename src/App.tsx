@@ -240,7 +240,7 @@ useEffect(() => {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <img
-            src="/property 1 copy.jpg"
+            src="/Screenshot 2025-11-09 144838 copy copy.png"
             alt="Luxury Property"
             className="w-full h-full object-cover animate-kenburns"
           />
