@@ -21,7 +21,7 @@ async function addProperty() {
     sqft: 380,
     status: 'available',
     featured: true,
-    images: ['property 2 copy copy.jpg'],
+    images: ['property 2 copy copy.jpg', 'property 2 copy copy copy.jpg', 'property 2 copy.jpg', 'property 2.jpg', 'property 1 copy.jpg', 'property 1.jpg', 'goyal aspire.jpg', 'goyal aspire_1_11zon.jpg', 'royal 1 copy.jpg', 'kasturi logo 2.jpg'],
     amenities: {
       highlights: [
         'Launching Soon in Kandivali West',
