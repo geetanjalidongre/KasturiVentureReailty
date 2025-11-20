@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   ChevronDown, Phone, Mail, MapPin, Home, Building, Users, Award,
   ArrowRight, Star, CheckCircle, MessageCircle, Menu, X, Play, Pause,
-  ChevronLeft, ChevronRight, Search, Filter, Eye, Heart, Share2
+  ChevronLeft, ChevronRight, Search, Filter, Eye, Heart, Share2, Settings
 } from 'lucide-react';
 import { AnimatedSection } from './components/AnimatedSection';
 import { PropertyCard } from './components/PropertyCard';
@@ -14,6 +14,7 @@ import { TestimonialSlider } from './components/TestimonialSlider';
 import { FeedbackModal } from './components/FeedbackModal';
 import { FeedbackViewer } from './components/FeedbackViewer';
 import { PropertyDetailModal } from './components/PropertyDetailModal';
+import { PropertyManagementModal } from './components/PropertyManagementModal';
 import { emailEnquiryService, propertyService, Property } from './lib/supabase';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
   const [isFeedbackViewerOpen, setIsFeedbackViewerOpen] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [isPropertyDetailOpen, setIsPropertyDetailOpen] = useState(false);
+  const [isPropertyManagementOpen, setIsPropertyManagementOpen] = useState(false);
   const [properties, setProperties] = useState<Property[]>([]);
   const [isLoadingProperties, setIsLoadingProperties] = useState(true);
   const [filters, setFilters] = useState({
@@ -654,14 +656,14 @@ useEffect(() => {
                       label="First Name"
                       type="text"
                       value={contactForm.firstName}
-                      onChange={(value) => setContactForm({...contactForm, firstName: value})}
+                      onChange={(e) => setContactForm({...contactForm, firstName: e.target.value})}
                       required
                     />
                     <FloatingLabelInput
                       label="Last Name"
                       type="text"
                       value={contactForm.lastName}
-                      onChange={(value) => setContactForm({...contactForm, lastName: value})}
+                      onChange={(e) => setContactForm({...contactForm, lastName: e.target.value})}
                       required
                     />
                   </div>
@@ -671,7 +673,7 @@ useEffect(() => {
                       label="Email Address"
                       type="email"
                       value={contactForm.email}
-                      onChange={(value) => setContactForm({...contactForm, email: value})}
+                      onChange={(e) => setContactForm({...contactForm, email: e.target.value})}
                       required
                     />
                   </div>
@@ -681,7 +683,7 @@ useEffect(() => {
                       label="Phone Number"
                       type="tel"
                       value={contactForm.phone}
-                      onChange={(value) => setContactForm({...contactForm, phone: value})}
+                      onChange={(e) => setContactForm({...contactForm, phone: e.target.value})}
                       required
                     />
                   </div>
@@ -704,7 +706,7 @@ useEffect(() => {
                     <FloatingLabelTextarea
                       label="Tell us about your requirements..."
                       value={contactForm.message}
-                      onChange={(value) => setContactForm({...contactForm, message: value})}
+                      onChange={(e) => setContactForm({...contactForm, message: e.target.value})}
                       rows={4}
                     />
                   </div>
@@ -821,14 +823,26 @@ useEffect(() => {
         </div>
       </footer>
 
-      {/* Floating Feedback Button */}
-      <button
-        onClick={() => setIsFeedbackOpen(true)}
-        className="fixed bottom-8 right-8 bg-gradient-to-r from-amber-500 to-yellow-500 text-white p-4 rounded-full shadow-2xl hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 transform hover:scale-110 z-40 flex items-center space-x-2 group animate-zoom-in animate-bounce hover:animate-pulse" style={{ animationDelay: '1s' }}
-      >
-        <Star className="w-6 h-6 fill-current" />
-        <span className="hidden group-hover:inline-block font-semibold pr-2">Feedback</span>
-      </button>
+      {/* Floating Action Buttons */}
+      <div className="fixed bottom-8 right-8 flex flex-col space-y-4 z-40">
+        <button
+          onClick={() => setIsPropertyManagementOpen(true)}
+          className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white p-4 rounded-full shadow-2xl hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 transform hover:scale-110 flex items-center space-x-2 group animate-zoom-in"
+          style={{ animationDelay: '0.8s' }}
+        >
+          <Settings className="w-6 h-6" />
+          <span className="hidden group-hover:inline-block font-semibold pr-2">Manage</span>
+        </button>
+
+        <button
+          onClick={() => setIsFeedbackOpen(true)}
+          className="bg-gradient-to-r from-amber-500 to-yellow-500 text-white p-4 rounded-full shadow-2xl hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 transform hover:scale-110 flex items-center space-x-2 group animate-zoom-in animate-bounce hover:animate-pulse"
+          style={{ animationDelay: '1s' }}
+        >
+          <Star className="w-6 h-6 fill-current" />
+          <span className="hidden group-hover:inline-block font-semibold pr-2">Feedback</span>
+        </button>
+      </div>
 
       {/* Feedback Modal */}
       <FeedbackModal isOpen={isFeedbackOpen} onClose={() => setIsFeedbackOpen(false)} />
@@ -844,6 +858,13 @@ useEffect(() => {
           setIsPropertyDetailOpen(false);
           setSelectedProperty(null);
         }}
+      />
+
+      {/* Property Management Modal */}
+      <PropertyManagementModal
+        isOpen={isPropertyManagementOpen}
+        onClose={() => setIsPropertyManagementOpen(false)}
+        onPropertyChange={loadProperties}
       />
     </div>
   );
