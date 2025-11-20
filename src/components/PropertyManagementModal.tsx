@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Plus, Trash2, AlertCircle } from 'lucide-react';
+import { X, Plus, Trash2, AlertCircle, Edit } from 'lucide-react';
 import { Property, propertyService } from '../lib/supabase';
 import { FloatingLabelInput, FloatingLabelTextarea } from './FloatingLabels';
 
@@ -14,11 +14,12 @@ export const PropertyManagementModal: React.FC<PropertyManagementModalProps> = (
   onClose,
   onPropertyChange
 }) => {
-  const [mode, setMode] = useState<'list' | 'add'>('list');
+  const [mode, setMode] = useState<'list' | 'add' | 'edit'>('list');
   const [properties, setProperties] = useState<Property[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [editingPropertyId, setEditingPropertyId] = useState<string | null>(null);
 
   const [newProperty, setNewProperty] = useState({
     title: '',
@@ -108,6 +109,82 @@ export const PropertyManagementModal: React.FC<PropertyManagementModalProps> = (
     }
   };
 
+  const handleEditProperty = (property: Property) => {
+    setEditingPropertyId(property.id);
+    setNewProperty({
+      title: property.title,
+      description: property.description || '',
+      property_type: property.property_type,
+      location: property.location,
+      price_display: property.price_display,
+      price: property.price ? property.price.toString() : '',
+      bedrooms: property.bedrooms ? property.bedrooms.toString() : '',
+      bathrooms: property.bathrooms ? property.bathrooms.toString() : '',
+      sqft: property.sqft ? property.sqft.toString() : '',
+      featured: property.featured || false,
+      images: Array.isArray(property.images) ? property.images : [],
+      imageInput: ''
+    });
+    setMode('edit');
+  };
+
+  const handleUpdateProperty = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingPropertyId) return;
+
+    setIsLoading(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      const propertyData: any = {
+        title: newProperty.title,
+        description: newProperty.description,
+        property_type: newProperty.property_type,
+        location: newProperty.location,
+        price_display: newProperty.price_display,
+        featured: newProperty.featured,
+        images: newProperty.images
+      };
+
+      if (newProperty.price) propertyData.price = parseFloat(newProperty.price);
+      if (newProperty.bedrooms) propertyData.bedrooms = parseInt(newProperty.bedrooms);
+      if (newProperty.bathrooms) propertyData.bathrooms = parseInt(newProperty.bathrooms);
+      if (newProperty.sqft) propertyData.sqft = parseFloat(newProperty.sqft);
+
+      await propertyService.updateProperty(editingPropertyId, propertyData);
+
+      setSuccess('Property updated successfully!');
+      setNewProperty({
+        title: '',
+        description: '',
+        property_type: 'Residential',
+        location: '',
+        price_display: '',
+        price: '',
+        bedrooms: '',
+        bathrooms: '',
+        sqft: '',
+        featured: false,
+        images: [],
+        imageInput: ''
+      });
+      setEditingPropertyId(null);
+
+      await loadProperties();
+      onPropertyChange();
+
+      setTimeout(() => {
+        setMode('list');
+        setSuccess(null);
+      }, 2000);
+    } catch (err: any) {
+      setError('Failed to update property: ' + err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleDeleteProperty = async (id: string) => {
     if (!confirm('Are you sure you want to delete this property?')) return;
 
@@ -150,7 +227,7 @@ export const PropertyManagementModal: React.FC<PropertyManagementModalProps> = (
       <div className="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden animate-zoom-in">
         <div className="bg-gradient-to-r from-amber-500 to-yellow-500 p-6 flex items-center justify-between">
           <h2 className="text-2xl font-bold text-white flex items-center">
-            {mode === 'list' ? 'Manage Properties' : 'Add New Property'}
+            {mode === 'list' ? 'Manage Properties' : mode === 'edit' ? 'Edit Property' : 'Add New Property'}
           </h2>
           <button
             onClick={onClose}
@@ -232,19 +309,28 @@ export const PropertyManagementModal: React.FC<PropertyManagementModalProps> = (
                         {property.property_type}
                       </span>
                     </div>
-                    <button
-                      onClick={() => handleDeleteProperty(property.id)}
-                      disabled={isLoading}
-                      className="text-red-500 hover:bg-red-50 p-2 rounded-lg transition-colors disabled:opacity-50"
-                    >
-                      <Trash2 className="w-5 h-5" />
-                    </button>
+                    <div className="flex space-x-2">
+                      <button
+                        onClick={() => handleEditProperty(property)}
+                        disabled={isLoading}
+                        className="text-blue-500 hover:bg-blue-50 p-2 rounded-lg transition-colors disabled:opacity-50"
+                      >
+                        <Edit className="w-5 h-5" />
+                      </button>
+                      <button
+                        onClick={() => handleDeleteProperty(property.id)}
+                        disabled={isLoading}
+                        className="text-red-500 hover:bg-red-50 p-2 rounded-lg transition-colors disabled:opacity-50"
+                      >
+                        <Trash2 className="w-5 h-5" />
+                      </button>
+                    </div>
                   </div>
                 ))
               )}
             </div>
           ) : (
-            <form onSubmit={handleAddProperty} className="space-y-6">
+            <form onSubmit={mode === 'edit' ? handleUpdateProperty : handleAddProperty} className="space-y-6">
               <FloatingLabelInput
                 label="Property Title"
                 type="text"
@@ -375,13 +461,44 @@ export const PropertyManagementModal: React.FC<PropertyManagementModalProps> = (
                 </label>
               </div>
 
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-xl hover:from-amber-600 hover:to-yellow-600 transition-all font-semibold shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isLoading ? 'Adding Property...' : 'Add Property'}
-              </button>
+              <div className="flex space-x-4">
+                {mode === 'edit' && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMode('list');
+                      setEditingPropertyId(null);
+                      setNewProperty({
+                        title: '',
+                        description: '',
+                        property_type: 'Residential',
+                        location: '',
+                        price_display: '',
+                        price: '',
+                        bedrooms: '',
+                        bathrooms: '',
+                        sqft: '',
+                        featured: false,
+                        images: [],
+                        imageInput: ''
+                      });
+                    }}
+                    className="flex-1 bg-gray-300 text-gray-700 py-4 rounded-xl hover:bg-gray-400 transition-all font-semibold shadow-lg hover:shadow-xl"
+                  >
+                    Cancel
+                  </button>
+                )}
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className={`${mode === 'edit' ? 'flex-1' : 'w-full'} bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-xl hover:from-amber-600 hover:to-yellow-600 transition-all font-semibold shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed`}
+                >
+                  {isLoading
+                    ? (mode === 'edit' ? 'Updating Property...' : 'Adding Property...')
+                    : (mode === 'edit' ? 'Update Property' : 'Add Property')
+                  }
+                </button>
+              </div>
             </form>
           )}
         </div>
