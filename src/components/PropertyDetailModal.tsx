@@ -15,7 +15,7 @@ export const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({ proper
   if (!isOpen || !property) return null;
 
   const propertyImages = property.images && Array.isArray(property.images) && property.images.length > 0
-    ? property.images.map(img => img.startsWith('http') ? img : `/${img}`)
+    ? property.images.map(img => img.startsWith('http') ? img : `${import.meta.env.BASE_URL}${img.replace(/^\//, '')}`)
     : [];
 
   const images = propertyImages.length > 0

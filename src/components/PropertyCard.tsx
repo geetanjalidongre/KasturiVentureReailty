@@ -12,16 +12,16 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onViewDeta
 
   const getImageUrl = () => {
     if (imgError) {
-      console.log(`Image error for ${property.title}, using fallback`);
       return 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg';
     }
     if (property.images && Array.isArray(property.images) && property.images.length > 0) {
       const firstImage = property.images[0];
-      const imageUrl = firstImage.startsWith('http') ? firstImage : `/${firstImage}`;
-      console.log(`Loading image for ${property.title}:`, imageUrl);
-      return imageUrl;
+      if (firstImage.startsWith('http')) {
+        return firstImage;
+      }
+      const imagePath = firstImage.startsWith('/') ? firstImage : `/${firstImage}`;
+      return `${import.meta.env.BASE_URL}${imagePath.substring(1)}`;
     }
-    console.log(`No images found for ${property.title}, using fallback`);
     return 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg';
   };
 

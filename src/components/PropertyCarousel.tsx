@@ -58,7 +58,9 @@ export const PropertyCarousel: React.FC<PropertyCarouselProps> = ({
                 imageErrors[property.id]
                   ? 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg'
                   : (property.images && Array.isArray(property.images) && property.images.length > 0
-                      ? (property.images[0].startsWith('http') ? property.images[0] : `/${property.images[0]}`)
+                      ? (property.images[0].startsWith('http')
+                          ? property.images[0]
+                          : `${import.meta.env.BASE_URL}${property.images[0].replace(/^\//, '')}`)
                       : 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg')
               }
               alt={property.title}

@@ -175,7 +175,7 @@ useEffect(() => {
             <div className="flex items-center space-x-4">
               <div className="relative">
                 <img
-                  src="/KASTURI REAILTY VENTURE 2.jpg"
+                  src="https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg?auto=compress&cs=tinysrgb&w=100"
                   alt="Kasturi Realty Venture"
                   className="h-16 w-auto rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
                 />
@@ -253,7 +253,7 @@ useEffect(() => {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <img
-            src="/Screenshot 2025-11-09 144838 copy copy.png"
+            src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg"
             alt="Luxury Property"
             className="w-full h-full object-cover animate-kenburns"
           />
@@ -764,7 +764,7 @@ useEffect(() => {
             <div className="md:col-span-2 animate-zoom-in" style={{ animationDelay: '0.2s' }}>
               <div className="flex items-center space-x-4 mb-6 group">
                 <img
-                  src="/kasturi logo 2.jpg"
+                  src="https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg?auto=compress&cs=tinysrgb&w=100"
                   alt="Kasturi Realty Venture"
                   className="h-16 w-auto rounded-lg group-hover:scale-110 transition-transform duration-300 hover:rotate-6"
                 />
