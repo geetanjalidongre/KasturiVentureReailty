@@ -26,6 +26,7 @@ function App() {
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [isPropertyDetailOpen, setIsPropertyDetailOpen] = useState(false);
   const [isPropertyManagementOpen, setIsPropertyManagementOpen] = useState(false);
+  const [showManageButton, setShowManageButton] = useState(false);
   const [properties, setProperties] = useState<Property[]>([]);
   const [isLoadingProperties, setIsLoadingProperties] = useState(true);
   const [filters, setFilters] = useState({
@@ -79,6 +80,16 @@ Best regards`);
 
 useEffect(() => {
     loadProperties();
+
+    // Secret keyboard shortcut: Ctrl + Shift + M
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'M') {
+        setShowManageButton(prev => !prev);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
   }, []);
 
   const loadProperties = async () => {
@@ -825,14 +836,16 @@ useEffect(() => {
 
       {/* Floating Action Buttons */}
       <div className="fixed bottom-8 right-8 flex flex-col space-y-4 z-40">
-        <button
-          onClick={() => setIsPropertyManagementOpen(true)}
-          className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white p-4 rounded-full shadow-2xl hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 transform hover:scale-110 flex items-center space-x-2 group animate-zoom-in"
-          style={{ animationDelay: '0.8s' }}
-        >
-          <Settings className="w-6 h-6" />
-          <span className="hidden group-hover:inline-block font-semibold pr-2">Manage</span>
-        </button>
+        {showManageButton && (
+          <button
+            onClick={() => setIsPropertyManagementOpen(true)}
+            className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white p-4 rounded-full shadow-2xl hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 transform hover:scale-110 flex items-center space-x-2 group animate-zoom-in"
+            style={{ animationDelay: '0.8s' }}
+          >
+            <Settings className="w-6 h-6" />
+            <span className="hidden group-hover:inline-block font-semibold pr-2">Manage</span>
+          </button>
+        )}
 
         <button
           onClick={() => setIsFeedbackOpen(true)}
