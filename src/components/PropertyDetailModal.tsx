@@ -47,11 +47,11 @@ export const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({ proper
 
   return (
     <div
-      className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50"
+      className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 overflow-y-auto"
       onClick={onClose}
     >
       <div
-        className="relative bg-white rounded-2xl w-full max-w-6xl max-h-[90vh] overflow-auto"
+        className="relative bg-white rounded-2xl w-full max-w-6xl my-8 overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -105,7 +105,7 @@ export const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({ proper
             </div>
           </div>
 
-          <div className="p-8">
+          <div className="p-8 overflow-y-auto max-h-[600px]">
             <h2 className="text-3xl font-bold text-gray-900 mb-2">
               {property.title}
             </h2>
