@@ -184,7 +184,6 @@ useEffect(() => {
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">
                   Kasturi Realty Venture
                 </h1>
-                <p className="text-sm text-gray-600">Premium Real Estate Solutions</p>
               </div>
             </div>
             
@@ -274,10 +273,6 @@ useEffect(() => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <AnimatedSection className="space-y-8" animation="slideRight">
               <div className="space-y-6">
-                <div className="inline-flex items-center px-4 py-2 bg-amber-100 rounded-full text-amber-800 text-sm font-medium animate-bounce animate-glow">
-                  <Star className="w-4 h-4 mr-2 fill-current animate-rotate-in" />
-                  Premium Real Estate Since 2019
-                </div>
 
                 <h1 className="text-5xl lg:text-7xl font-bold leading-tight animate-slide-from-top">
                   <span className="block text-white">Discover Your</span>
@@ -341,26 +336,6 @@ useEffect(() => {
               </div>
             </AnimatedSection>
             
-            <AnimatedSection className="relative" animation="slideLeft" delay={200}>
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-400/20 to-yellow-400/20 rounded-3xl transform rotate-6 animate-pulse animate-glow"></div>
-                <div className="relative bg-white rounded-3xl shadow-2xl p-2 transform hover:rotate-0 transition-transform duration-700 animate-zoom-in" style={{ animationDelay: '0.4s' }}>
-                  <img
-                    src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg"
-                    alt="Luxury Property"
-                    className="w-full h-96 lg:h-[500px] object-cover rounded-2xl hover:scale-105 transition-transform duration-700"
-                  />
-                </div>
-
-                {/* Floating Elements */}
-                <div className="absolute -top-4 -right-4 bg-white rounded-full p-4 shadow-lg animate-bounce hover:scale-125 transition-transform cursor-pointer animate-rotate-in" style={{ animationDelay: '1s' }}>
-                  <Heart className="w-6 h-6 text-red-500" />
-                </div>
-                <div className="absolute -bottom-4 -left-4 bg-white rounded-full p-4 shadow-lg animate-bounce hover:scale-125 transition-transform cursor-pointer animate-rotate-in" style={{animationDelay: '1.2s'}}>
-                  <Eye className="w-6 h-6 text-blue-500" />
-                </div>
-              </div>
-            </AnimatedSection>
           </div>
         </div>
       </section>
