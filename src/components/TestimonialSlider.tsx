@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
 
 interface Testimonial {
+  id: number;
   name: string;
   role: string;
   content: string;
@@ -9,147 +10,112 @@ interface Testimonial {
   image?: string;
 }
 
-interface TestimonialSliderProps {
-  testimonials: Testimonial[];
-}
+const testimonials: Testimonial[] = [
+  {
+    id: 1,
+    name: 'Rajesh Kumar',
+    role: 'Property Owner',
+    content: 'Kasturi Reality Venture helped me find my dream home. Their professionalism and attention to detail is unmatched. Highly recommended!',
+    rating: 5
+  },
+  {
+    id: 2,
+    name: 'Priya Sharma',
+    role: 'First-time Buyer',
+    content: 'The team guided me through every step of the buying process. Their expertise made what seemed complicated feel simple and stress-free.',
+    rating: 5
+  },
+  {
+    id: 3,
+    name: 'Amit Patel',
+    role: 'Investor',
+    content: 'Excellent service and great property options. They understood my investment needs and delivered beyond expectations.',
+    rating: 5
+  }
+];
 
-export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonials }) => {
+export const TestimonialSlider: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  const nextTestimonial = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-    setTimeout(() => setIsAnimating(false), 800);
-  };
-
-  const prevTestimonial = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-    setTimeout(() => setIsAnimating(false), 800);
-  };
-
-  const goToTestimonial = (index: number) => {
-    if (isAnimating || index === currentIndex) return;
-    setIsAnimating(true);
-    setCurrentIndex(index);
-    setTimeout(() => setIsAnimating(false), 800);
-  };
 
   useEffect(() => {
-    const interval = setInterval(nextTestimonial, 6000);
-    return () => clearInterval(interval);
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    }, 6000);
+
+    return () => clearInterval(timer);
   }, []);
 
+  const goToPrevious = () => {
+    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+  };
+
   return (
-    <div className="relative bg-white rounded-3xl shadow-2xl p-8 md:p-12 max-w-5xl mx-auto overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-amber-50 to-yellow-50 opacity-50"></div>
-      <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-amber-200/20 to-yellow-200/20 rounded-full -translate-y-32 translate-x-32"></div>
-      <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-amber-200/20 to-yellow-200/20 rounded-full translate-y-24 -translate-x-24"></div>
-      
-      <div className="relative z-10">
-        {/* Quote Icon */}
-        <div className="flex justify-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-full flex items-center justify-center shadow-lg">
-            <Quote className="w-8 h-8 text-white" />
-          </div>
-        </div>
+    <div className="relative max-w-4xl mx-auto">
+      <div className="overflow-hidden">
+        {testimonials.map((testimonial, index) => (
+          <div
+            key={testimonial.id}
+            className={`transition-opacity duration-700 ${
+              index === currentIndex ? 'opacity-100' : 'opacity-0 absolute inset-0'
+            }`}
+          >
+            <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 relative">
+              <Quote className="absolute top-6 right-6 w-16 h-16 text-amber-100" />
 
-        {/* Testimonials */}
-        <div className="relative overflow-hidden min-h-[300px]">
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              className={`testimonial absolute inset-0 transition-all duration-800 ease-in-out ${
-                index === currentIndex ? 'active opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`}
-            >
-              <div className="text-center">
-                {/* Stars */}
-                <div className="flex justify-center mb-6">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star 
-                      key={i} 
-                      className="w-6 h-6 text-amber-400 fill-current mx-0.5 transform hover:scale-110 transition-transform" 
-                    />
-                  ))}
+              <div className="flex items-center mb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-yellow-400 rounded-full flex items-center justify-center text-white text-2xl font-bold mr-4">
+                  {testimonial.name.charAt(0)}
                 </div>
-
-                {/* Content */}
-                <blockquote className="text-xl md:text-2xl text-gray-700 italic mb-8 leading-relaxed max-w-4xl mx-auto">
-                  "{testimonial.content}"
-                </blockquote>
-
-                {/* Author */}
-                <div className="flex items-center justify-center space-x-4">
-                  {testimonial.image && (
-                    <div className="relative">
-                      <img
-                        src={testimonial.image}
-                        alt={testimonial.name}
-                        className="w-16 h-16 rounded-full object-cover shadow-lg ring-4 ring-amber-100"
-                      />
-                      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-amber-400/20 to-yellow-400/20"></div>
-                    </div>
-                  )}
-                  <div className="text-left">
-                    <div className="font-bold text-gray-900 text-xl">{testimonial.name}</div>
-                    <div className="text-amber-600 font-semibold">{testimonial.role}</div>
-                  </div>
+                <div>
+                  <h4 className="text-xl font-bold text-gray-800">{testimonial.name}</h4>
+                  <p className="text-gray-600">{testimonial.role}</p>
                 </div>
               </div>
+
+              <div className="flex mb-4">
+                {[...Array(testimonial.rating)].map((_, i) => (
+                  <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
+                ))}
+              </div>
+
+              <p className="text-gray-700 text-lg leading-relaxed italic">
+                "{testimonial.content}"
+              </p>
             </div>
-          ))}
-        </div>
-
-        {/* Navigation */}
-        <div className="flex items-center justify-center space-x-4 mt-8">
-          <button
-            onClick={prevTestimonial}
-            className="w-12 h-12 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-600 rounded-full hover:from-amber-500 hover:to-yellow-500 hover:text-white transition-all duration-300 transform hover:scale-110 shadow-lg"
-            disabled={isAnimating}
-          >
-            <ChevronLeft className="w-6 h-6 mx-auto" />
-          </button>
-
-          {/* Dots */}
-          <div className="flex space-x-2">
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToTestimonial(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 transform hover:scale-125 ${
-                  index === currentIndex
-                    ? 'bg-amber-500 scale-125 shadow-lg'
-                    : 'bg-gray-300 hover:bg-amber-300'
-                }`}
-              />
-            ))}
           </div>
+        ))}
+      </div>
 
+      <button
+        onClick={goToPrevious}
+        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white rounded-full p-3 shadow-lg hover:bg-amber-500 hover:text-white transition-all"
+      >
+        <ChevronLeft className="w-6 h-6" />
+      </button>
+
+      <button
+        onClick={goToNext}
+        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white rounded-full p-3 shadow-lg hover:bg-amber-500 hover:text-white transition-all"
+      >
+        <ChevronRight className="w-6 h-6" />
+      </button>
+
+      <div className="flex justify-center mt-6 space-x-2">
+        {testimonials.map((_, index) => (
           <button
-            onClick={nextTestimonial}
-            className="w-12 h-12 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-600 rounded-full hover:from-amber-500 hover:to-yellow-500 hover:text-white transition-all duration-300 transform hover:scale-110 shadow-lg"
-            disabled={isAnimating}
-          >
-            <ChevronRight className="w-6 h-6 mx-auto" />
-          </button>
-        </div>
-
-        {/* Progress Indicator */}
-        <div className="flex justify-center mt-6">
-          <div className="w-32 h-1 bg-gray-200 rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-gradient-to-r from-amber-400 to-yellow-400 transition-all duration-300 rounded-full"
-              style={{ 
-                width: `${((currentIndex + 1) / testimonials.length) * 100}%` 
-              }}
-            />
-          </div>
-        </div>
+            key={index}
+            onClick={() => setCurrentIndex(index)}
+            className={`w-2 h-2 rounded-full transition-all ${
+              index === currentIndex
+                ? 'bg-amber-500 w-8'
+                : 'bg-gray-300 hover:bg-gray-400'
+            }`}
+          />
+        ))}
       </div>
     </div>
   );

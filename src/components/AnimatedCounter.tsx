@@ -4,27 +4,28 @@ interface AnimatedCounterProps {
   end: number;
   duration?: number;
   suffix?: string;
-  className?: string;
+  prefix?: string;
 }
 
-export const AnimatedCounter: React.FC<AnimatedCounterProps> = ({ 
-  end, 
-  duration = 2000, 
-  suffix = '', 
-  className = '' 
+export const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
+  end,
+  duration = 2000,
+  suffix = '',
+  prefix = ''
 }) => {
   const [count, setCount] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !isVisible) {
+        if (entry.isIntersecting) {
           setIsVisible(true);
+          observer.disconnect();
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.1 }
     );
 
     if (ref.current) {
@@ -32,29 +33,33 @@ export const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
     }
 
     return () => observer.disconnect();
-  }, [isVisible]);
+  }, []);
 
   useEffect(() => {
     if (!isVisible) return;
 
     let startTime: number;
+    let animationFrame: number;
+
     const animate = (currentTime: number) => {
       if (!startTime) startTime = currentTime;
       const progress = Math.min((currentTime - startTime) / duration, 1);
-      
+
       setCount(Math.floor(progress * end));
-      
+
       if (progress < 1) {
-        requestAnimationFrame(animate);
+        animationFrame = requestAnimationFrame(animate);
       }
     };
-    
-    requestAnimationFrame(animate);
+
+    animationFrame = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(animationFrame);
   }, [isVisible, end, duration]);
 
   return (
-    <div ref={ref} className={className}>
-      {count}{suffix}
-    </div>
+    <span ref={ref}>
+      {prefix}{count}{suffix}
+    </span>
   );
 };

@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 
 interface FloatingLabelInputProps {
   label: string;
-  type: string;
+  type?: string;
   value: string;
-  onChange: (value: string) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
 }
 
 export const FloatingLabelInput: React.FC<FloatingLabelInputProps> = ({
   label,
-  type,
+  type = 'text',
   value,
   onChange,
   required = false
@@ -22,21 +22,22 @@ export const FloatingLabelInput: React.FC<FloatingLabelInputProps> = ({
       <input
         type={type}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={onChange}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         required={required}
-        className="form-input w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 bg-white peer placeholder-transparent text-gray-900"
+        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-amber-500 focus:outline-none transition-all peer placeholder-transparent"
         placeholder={label}
       />
       <label
-        className={`floating-label absolute left-4 transition-all duration-300 pointer-events-none text-gray-500 ${
+        className={`absolute left-4 transition-all pointer-events-none ${
           isFocused || value
-            ? '-top-2 text-sm text-amber-600 bg-white px-2 font-medium'
-            : 'top-4 text-base'
+            ? '-top-2.5 text-xs bg-white px-1 text-amber-600'
+            : 'top-3 text-gray-500'
         }`}
       >
         {label}
+        {required && <span className="text-red-500 ml-1">*</span>}
       </label>
     </div>
   );
@@ -45,15 +46,17 @@ export const FloatingLabelInput: React.FC<FloatingLabelInputProps> = ({
 interface FloatingLabelTextareaProps {
   label: string;
   value: string;
-  onChange: (value: string) => void;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   rows?: number;
+  required?: boolean;
 }
 
 export const FloatingLabelTextarea: React.FC<FloatingLabelTextareaProps> = ({
   label,
   value,
   onChange,
-  rows = 4
+  rows = 4,
+  required = false
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -61,21 +64,23 @@ export const FloatingLabelTextarea: React.FC<FloatingLabelTextareaProps> = ({
     <div className="relative">
       <textarea
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={onChange}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
+        required={required}
         rows={rows}
-        className="form-input w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 bg-white peer placeholder-transparent resize-none text-gray-900"
+        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-amber-500 focus:outline-none transition-all peer placeholder-transparent resize-none"
         placeholder={label}
       />
       <label
-        className={`floating-label absolute left-4 transition-all duration-300 pointer-events-none text-gray-500 ${
+        className={`absolute left-4 transition-all pointer-events-none ${
           isFocused || value
-            ? '-top-2 text-sm text-amber-600 bg-white px-2 font-medium'
-            : 'top-4 text-base'
+            ? '-top-2.5 text-xs bg-white px-1 text-amber-600'
+            : 'top-3 text-gray-500'
         }`}
       >
         {label}
+        {required && <span className="text-red-500 ml-1">*</span>}
       </label>
     </div>
   );
