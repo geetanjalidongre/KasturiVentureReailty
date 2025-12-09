@@ -175,7 +175,7 @@ useEffect(() => {
             <div className="flex items-center space-x-4">
               <div className="relative">
                 <img
-                  src="/KASTURI REAILTY VENTURE 2.jpg"
+                  src="/kasturi_reailty_venture_2.jpg"
                   alt="Kasturi Realty Venture"
                   className="h-16 w-auto rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
                 />
@@ -739,7 +739,7 @@ useEffect(() => {
             <div className="md:col-span-2 animate-zoom-in" style={{ animationDelay: '0.2s' }}>
               <div className="flex items-center space-x-4 mb-6 group">
                 <img
-                  src="/kasturi logo 2.jpg"
+                  src="/kasturi_reailty_venture_2.jpg"
                   alt="Kasturi Realty Venture"
                   className="h-16 w-auto rounded-lg group-hover:scale-110 transition-transform duration-300 hover:rotate-6"
                 />
