@@ -252,7 +252,7 @@ useEffect(() => {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <img
-            src="/Screenshot 2025-11-09 144838 copy copy.png"
+            src="/dtg_ copy.png"
             alt="Luxury Property"
             className="w-full h-full object-cover animate-kenburns"
           />
@@ -786,7 +786,7 @@ useEffect(() => {
           <div className="border-t border-gray-800 mt-12 pt-8 animate-fade-in" style={{ animationDelay: '0.8s' }}>
             <div className="flex flex-col md:flex-row justify-between items-center">
               <p className="text-gray-400 text-sm">
-                &copy; 2024 Kasturi Reality Ventures. All rights reserved.
+                &copy; 2024 Kasturi Realty Ventures. All rights reserved.
               </p>
               <div className="flex space-x-6 mt-4 md:mt-0">
                 <button

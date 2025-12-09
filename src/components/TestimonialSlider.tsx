@@ -15,7 +15,7 @@ const testimonials: Testimonial[] = [
     id: 1,
     name: 'Rajesh Kumar',
     role: 'Property Owner',
-    content: 'Kasturi Reality Venture helped me find my dream home. Their professionalism and attention to detail is unmatched. Highly recommended!',
+    content: 'Kasturi Realty Venture helped me find my dream home. Their professionalism and attention to detail is unmatched. Highly recommended!',
     rating: 5
   },
   {
