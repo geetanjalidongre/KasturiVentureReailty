@@ -25,6 +25,7 @@ function App() {
   const [isPropertyDetailOpen, setIsPropertyDetailOpen] = useState(false);
   const [isPropertyManagementOpen, setIsPropertyManagementOpen] = useState(false);
   const [showManageButton, setShowManageButton] = useState(false);
+  const [showFeedbackOptions, setShowFeedbackOptions] = useState(false);
   const [properties, setProperties] = useState<Property[]>([]);
   const [isLoadingProperties, setIsLoadingProperties] = useState(true);
   const [filters, setFilters] = useState({
@@ -808,7 +809,7 @@ useEffect(() => {
       </footer>
 
       {/* Floating Action Buttons */}
-      <div className="fixed bottom-8 right-8 flex flex-col space-y-4 z-40">
+      <div className="fixed bottom-8 right-8 flex flex-col items-end space-y-4 z-40">
         {showManageButton && (
           <button
             onClick={() => setIsPropertyManagementOpen(true)}
@@ -820,25 +821,43 @@ useEffect(() => {
           </button>
         )}
 
-        <button
-          onClick={handleWhatsAppInquiry}
-          className="bg-gradient-to-r from-green-500 to-green-600 text-white p-4 rounded-full shadow-2xl hover:from-green-600 hover:to-green-700 transition-all duration-300 transform hover:scale-110 flex items-center space-x-2 group animate-zoom-in"
-          style={{ animationDelay: '1s' }}
-          title="WhatsApp Feedback"
-        >
-          <MessageCircle className="w-6 h-6" />
-          <span className="hidden group-hover:inline-block font-semibold pr-2">WhatsApp</span>
-        </button>
+        <div className="relative">
+          {showFeedbackOptions && (
+            <div className="absolute bottom-20 right-0 flex flex-col space-y-3 animate-zoom-in">
+              <button
+                onClick={() => {
+                  handleWhatsAppInquiry();
+                  setShowFeedbackOptions(false);
+                }}
+                className="bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-3 rounded-full shadow-2xl hover:from-green-600 hover:to-green-700 transition-all duration-300 transform hover:scale-110 flex items-center space-x-2 whitespace-nowrap"
+              >
+                <MessageCircle className="w-5 h-5" />
+                <span className="font-semibold">WhatsApp</span>
+              </button>
 
-        <button
-          onClick={handleEmailInquiry}
-          className="bg-gradient-to-r from-amber-500 to-yellow-500 text-white p-4 rounded-full shadow-2xl hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 transform hover:scale-110 flex items-center space-x-2 group animate-zoom-in"
-          style={{ animationDelay: '1.2s' }}
-          title="Email Feedback"
-        >
-          <Mail className="w-6 h-6" />
-          <span className="hidden group-hover:inline-block font-semibold pr-2">Email</span>
-        </button>
+              <button
+                onClick={() => {
+                  handleEmailInquiry();
+                  setShowFeedbackOptions(false);
+                }}
+                className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-full shadow-2xl hover:from-blue-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-110 flex items-center space-x-2 whitespace-nowrap"
+              >
+                <Mail className="w-5 h-5" />
+                <span className="font-semibold">Email</span>
+              </button>
+            </div>
+          )}
+
+          <button
+            onClick={() => setShowFeedbackOptions(!showFeedbackOptions)}
+            className="bg-gradient-to-r from-amber-500 to-yellow-500 text-white p-4 rounded-full shadow-2xl hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 transform hover:scale-110 flex items-center space-x-2 group animate-zoom-in"
+            style={{ animationDelay: '1s' }}
+            title="Contact Us"
+          >
+            <MessageCircle className="w-6 h-6" />
+            <span className="hidden group-hover:inline-block font-semibold pr-2">Contact</span>
+          </button>
+        </div>
       </div>
 
       {/* Feedback Viewer Modal */}
