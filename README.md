@@ -1,4 +1,4 @@
-# Kasturi Realty Venture
+# Kasturi Reality Venture
 
 A premium, full-featured real estate website built with modern web technologies, showcasing luxury properties with an elegant user experience and comprehensive property management features.
 

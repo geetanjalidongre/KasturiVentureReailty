@@ -46,7 +46,7 @@ function App() {
   });
 
   const handleEmailInquiry = () => {
-    const subject = encodeURIComponent('Property Inquiry - Kasturi Realty Venture');
+    const subject = encodeURIComponent('Property Inquiry - KASTURI REALITY VENTURE');
     const body = encodeURIComponent(`Dear Manoj Shrivastav,
 
 I am interested in learning more about your properties. Please contact me with more details.
@@ -56,7 +56,7 @@ Best regards`);
     emailEnquiryService.submitEmailEnquiry({
       sender_name: 'Website Visitor',
       sender_email: 'visitor@example.com',
-      subject: 'Property Inquiry - Kasturi Realty Venture',
+      subject: 'Property Inquiry - KASTURI REALITY VENTURE',
       message: 'I am interested in learning more about your properties. Please contact me with more details.',
       enquiry_source: 'hero_section'
     }).catch(console.error);
@@ -70,7 +70,7 @@ Best regards`);
     emailEnquiryService.submitEmailEnquiry({
       sender_name: 'Website Visitor',
       sender_email: 'visitor@example.com',
-      subject: 'WhatsApp Inquiry - Kasturi Realty Venture',
+      subject: 'WhatsApp Inquiry - KASTURI REALITY VENTURE',
       message: 'Hi Manoj, I am interested in your properties. Can you please share more details?',
       enquiry_source: 'whatsapp'
     }).catch(console.error);
@@ -146,7 +146,7 @@ useEffect(() => {
     {
       name: "Rajesh Kumar",
       role: "Villa Owner",
-      content: "Kasturi transformed our dream into reality. The attention to detail and premium quality exceeded our expectations. Manoj's personal involvement made all the difference.",
+      content: "KASTURI transformed our dream into reality. The attention to detail and premium quality exceeded our expectations. Manoj's personal involvement made all the difference.",
       rating: 5,
       image: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg"
     },
@@ -175,14 +175,14 @@ useEffect(() => {
             <div className="flex items-center space-x-4">
               <div className="relative">
                 <img
-                  src="/KASTURI REAILTY VENTURE 2.jpg"
-                  alt="Kasturi Realty Venture"
+                  src="/kasturi_reailty_venture_2.jpg"
+                  alt="KASTURI REALITY VENTURE"
                   className="h-16 w-auto rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
                 />
               </div>
               <div className="hidden md:block">
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">
-                  Kasturi Realty Venture
+                  KASTURI REALITY VENTURE
                 </h1>
               </div>
             </div>
@@ -252,7 +252,7 @@ useEffect(() => {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <img
-            src="/Screenshot 2025-11-09 144838 copy copy.png"
+            src="/dtg_ copy.png"
             alt="Luxury Property"
             className="w-full h-full object-cover animate-kenburns"
           />
@@ -282,7 +282,7 @@ useEffect(() => {
                 </h1>
 
                 <p className="text-xl lg:text-2xl text-gray-200 leading-relaxed max-w-2xl animate-fade-in" style={{ animationDelay: '0.3s' }}>
-                  Experience luxury living with Kasturi Realty Venture. We create exceptional residential and commercial spaces that blend modern elegance with timeless sophistication.
+                  Experience luxury living with KASTURI REALITY VENTURE. We create exceptional residential and commercial spaces that blend modern elegance with timeless sophistication.
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-4 pt-4 animate-zoom-in" style={{ animationDelay: '0.5s' }}>
@@ -456,15 +456,15 @@ useEffect(() => {
             <AnimatedSection animation="slideRight">
               <div className="inline-flex items-center px-4 py-2 bg-amber-500/20 rounded-full text-amber-300 text-sm font-medium mb-8">
                 <Award className="w-4 h-4 mr-2" />
-                About Kasturi Realty Venture
+                About KASTURI REALITY VENTURE
               </div>
-              
+
               <h2 className="text-4xl lg:text-6xl font-bold mb-8 leading-tight">
                 Building Dreams <span className="bg-gradient-to-r from-amber-400 to-yellow-400 bg-clip-text text-transparent">Since 2019</span>
               </h2>
-              
+
               <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-                With over 5 years of excellence in the real estate industry, Kasturi Realty Venture has been at the forefront of creating premium living and working spaces that define modern luxury and sophistication.
+                With over 5 years of excellence in the real estate industry, KASTURI REALITY VENTURE has been at the forefront of creating premium living and working spaces that define modern luxury and sophistication.
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
@@ -530,7 +530,7 @@ useEffect(() => {
               What Our <span className="bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">Clients Say</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Hear from satisfied homeowners and investors who chose Kasturi Realty Venture for their property needs
+              Hear from satisfied homeowners and investors who chose KASTURI REALITY VENTURE for their property needs
             </p>
           </AnimatedSection>
           
@@ -739,13 +739,13 @@ useEffect(() => {
             <div className="md:col-span-2 animate-zoom-in" style={{ animationDelay: '0.2s' }}>
               <div className="flex items-center space-x-4 mb-6 group">
                 <img
-                  src="/kasturi logo 2.jpg"
-                  alt="Kasturi Realty Venture"
+                  src="/kasturi_reailty_venture_2.jpg"
+                  alt="KASTURI REALITY VENTURE"
                   className="h-16 w-auto rounded-lg group-hover:scale-110 transition-transform duration-300 hover:rotate-6"
                 />
                 <div>
                   <h3 className="text-2xl font-bold bg-gradient-to-r from-amber-400 to-yellow-400 bg-clip-text text-transparent">
-                    Kasturi Realty Venture
+                    KASTURI REALITY VENTURE
                   </h3>
                   <p className="text-gray-400">Premium Real Estate Solutions</p>
                 </div>
@@ -786,7 +786,7 @@ useEffect(() => {
           <div className="border-t border-gray-800 mt-12 pt-8 animate-fade-in" style={{ animationDelay: '0.8s' }}>
             <div className="flex flex-col md:flex-row justify-between items-center">
               <p className="text-gray-400 text-sm">
-                &copy; 2024 Kasturi Reality Ventures. All rights reserved.
+                &copy; 2024 KASTURI REALITY VENTURE. All rights reserved.
               </p>
               <div className="flex space-x-6 mt-4 md:mt-0">
                 <button
