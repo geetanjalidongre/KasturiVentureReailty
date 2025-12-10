@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Star, MessageSquare, MessageCircle, Send } from 'lucide-react';
+import { X, Star, MessageSquare, MessageCircle, Send, CheckCircle } from 'lucide-react';
 import { feedbackService } from '../lib/supabase';
 
 interface FeedbackOptionsModalProps {
@@ -8,41 +8,43 @@ interface FeedbackOptionsModalProps {
 }
 
 export function FeedbackOptionsModal({ isOpen, onClose }: FeedbackOptionsModalProps) {
-  const [selectedOption, setSelectedOption] = useState<'rating' | 'form' | 'whatsapp' | null>(null);
+  const [selectedOption, setSelectedOption] = useState<'rating' | 'form' | null>(null);
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: '',
-    rating: 0
+    message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   if (!isOpen) return null;
 
   const handleRatingSubmit = async () => {
     if (rating === 0) {
-      alert('Please select a rating');
+      setErrorMessage('Please select a rating');
       return;
     }
 
     setIsSubmitting(true);
+    setErrorMessage('');
+
     try {
       await feedbackService.submitFeedback({
-        name: 'Anonymous',
+        name: 'Anonymous User',
         rating,
-        message: `User rated ${rating} stars`
+        message: `Rated ${rating} out of 5 stars`
       });
+
       setSubmitSuccess(true);
       setTimeout(() => {
-        onClose();
-        resetForm();
+        handleClose();
       }, 2000);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error submitting rating:', error);
-      alert('Failed to submit rating. Please try again.');
+      setErrorMessage(error?.message || 'Failed to submit rating. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -50,45 +52,57 @@ export function FeedbackOptionsModal({ isOpen, onClose }: FeedbackOptionsModalPr
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage('');
 
-    if (!formData.name || !formData.message) {
-      alert('Please fill in all required fields');
+    if (!formData.name.trim()) {
+      setErrorMessage('Please enter your name');
+      return;
+    }
+
+    if (!formData.message.trim()) {
+      setErrorMessage('Please enter your message');
       return;
     }
 
     setIsSubmitting(true);
+
     try {
-      await feedbackService.submitFeedback({
-        name: formData.name,
-        email: formData.email || undefined,
-        rating: formData.rating || 5,
-        message: formData.message
-      });
+      const feedbackData: any = {
+        name: formData.name.trim(),
+        rating: rating || 5,
+        message: formData.message.trim()
+      };
+
+      if (formData.email.trim()) {
+        feedbackData.email = formData.email.trim();
+      }
+
+      await feedbackService.submitFeedback(feedbackData);
+
       setSubmitSuccess(true);
       setTimeout(() => {
-        onClose();
-        resetForm();
+        handleClose();
       }, 2000);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error submitting feedback:', error);
-      alert('Failed to submit feedback. Please try again.');
+      setErrorMessage(error?.message || 'Failed to submit feedback. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleWhatsAppFeedback = () => {
-    const message = encodeURIComponent('Hi, I would like to share my feedback about your services.');
+    const message = encodeURIComponent('Hi, I would like to share my feedback about your real estate services.');
     window.open(`https://wa.me/919987739999?text=${message}`, '_blank');
-    onClose();
   };
 
   const resetForm = () => {
     setSelectedOption(null);
     setRating(0);
     setHoverRating(0);
-    setFormData({ name: '', email: '', message: '', rating: 0 });
+    setFormData({ name: '', email: '', message: '' });
     setSubmitSuccess(false);
+    setErrorMessage('');
   };
 
   const handleClose = () => {
@@ -99,7 +113,7 @@ export function FeedbackOptionsModal({ isOpen, onClose }: FeedbackOptionsModalPr
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl animate-zoom-in">
-        <div className="sticky top-0 bg-gradient-to-r from-amber-500 to-yellow-500 p-6 rounded-t-3xl flex justify-between items-center">
+        <div className="sticky top-0 bg-gradient-to-r from-amber-500 to-yellow-500 p-6 rounded-t-3xl flex justify-between items-center z-10">
           <h2 className="text-3xl font-bold text-white">Share Your Feedback</h2>
           <button
             onClick={handleClose}
@@ -112,8 +126,8 @@ export function FeedbackOptionsModal({ isOpen, onClose }: FeedbackOptionsModalPr
         <div className="p-8">
           {submitSuccess ? (
             <div className="text-center py-12">
-              <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-zoom-in">
-                <Send className="w-10 h-10 text-white" />
+              <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
+                <CheckCircle className="w-10 h-10 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-2">Thank You!</h3>
               <p className="text-gray-600">Your feedback has been submitted successfully.</p>
@@ -139,10 +153,10 @@ export function FeedbackOptionsModal({ isOpen, onClose }: FeedbackOptionsModalPr
 
               <button
                 onClick={() => setSelectedOption('form')}
-                className="w-full p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl hover:shadow-xl transition-all duration-300 transform hover:scale-105 border-2 border-blue-200 hover:border-blue-400 group"
+                className="w-full p-6 bg-gradient-to-br from-blue-50 to-sky-50 rounded-2xl hover:shadow-xl transition-all duration-300 transform hover:scale-105 border-2 border-blue-200 hover:border-blue-400 group"
               >
                 <div className="flex items-center space-x-4">
-                  <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-sky-400 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                     <MessageSquare className="w-8 h-8 text-white" />
                   </div>
                   <div className="text-left">
@@ -153,7 +167,7 @@ export function FeedbackOptionsModal({ isOpen, onClose }: FeedbackOptionsModalPr
               </button>
 
               <button
-                onClick={() => setSelectedOption('whatsapp')}
+                onClick={handleWhatsAppFeedback}
                 className="w-full p-6 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl hover:shadow-xl transition-all duration-300 transform hover:scale-105 border-2 border-green-200 hover:border-green-400 group"
               >
                 <div className="flex items-center space-x-4">
@@ -176,6 +190,7 @@ export function FeedbackOptionsModal({ isOpen, onClose }: FeedbackOptionsModalPr
                 {[1, 2, 3, 4, 5].map((star) => (
                   <button
                     key={star}
+                    type="button"
                     onClick={() => setRating(star)}
                     onMouseEnter={() => setHoverRating(star)}
                     onMouseLeave={() => setHoverRating(0)}
@@ -204,14 +219,26 @@ export function FeedbackOptionsModal({ isOpen, onClose }: FeedbackOptionsModalPr
                 </div>
               )}
 
+              {errorMessage && (
+                <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                  <p className="text-red-600 text-sm">{errorMessage}</p>
+                </div>
+              )}
+
               <div className="flex space-x-4">
                 <button
-                  onClick={() => setSelectedOption(null)}
+                  type="button"
+                  onClick={() => {
+                    setSelectedOption(null);
+                    setErrorMessage('');
+                  }}
                   className="flex-1 px-6 py-3 border-2 border-gray-300 rounded-full hover:bg-gray-50 transition-all duration-300 font-semibold"
+                  disabled={isSubmitting}
                 >
                   Back
                 </button>
                 <button
+                  type="button"
                   onClick={handleRatingSubmit}
                   disabled={isSubmitting || rating === 0}
                   className="flex-1 px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-500 text-white rounded-full hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
@@ -232,9 +259,9 @@ export function FeedbackOptionsModal({ isOpen, onClose }: FeedbackOptionsModalPr
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all outline-none"
                   placeholder="Enter your name"
-                  required
+                  disabled={isSubmitting}
                 />
               </div>
 
@@ -246,8 +273,9 @@ export function FeedbackOptionsModal({ isOpen, onClose }: FeedbackOptionsModalPr
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all outline-none"
                   placeholder="your@email.com"
+                  disabled={isSubmitting}
                 />
               </div>
 
@@ -258,28 +286,31 @@ export function FeedbackOptionsModal({ isOpen, onClose }: FeedbackOptionsModalPr
                 <textarea
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all resize-none"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all resize-none outline-none"
                   rows={4}
                   placeholder="Tell us about your experience..."
-                  required
+                  disabled={isSubmitting}
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Rate Your Experience
+                  Rate Your Experience (Optional)
                 </label>
                 <div className="flex space-x-2">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
                       key={star}
                       type="button"
-                      onClick={() => setFormData({ ...formData, rating: star })}
+                      onClick={() => setRating(star)}
+                      onMouseEnter={() => setHoverRating(star)}
+                      onMouseLeave={() => setHoverRating(0)}
                       className="transform transition-all duration-300 hover:scale-125"
+                      disabled={isSubmitting}
                     >
                       <Star
                         className={`w-8 h-8 transition-colors ${
-                          star <= formData.rating
+                          star <= (hoverRating || rating)
                             ? 'fill-amber-400 text-amber-400'
                             : 'text-gray-300'
                         }`}
@@ -289,11 +320,39 @@ export function FeedbackOptionsModal({ isOpen, onClose }: FeedbackOptionsModalPr
                 </div>
               </div>
 
+              <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+                <div className="flex items-start space-x-3">
+                  <MessageCircle className="w-5 h-5 text-green-600 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-green-900 mb-1">Prefer WhatsApp?</p>
+                    <p className="text-sm text-green-700 mb-2">You can also share your feedback directly on WhatsApp</p>
+                    <button
+                      type="button"
+                      onClick={handleWhatsAppFeedback}
+                      className="text-sm font-semibold text-green-600 hover:text-green-700 underline"
+                      disabled={isSubmitting}
+                    >
+                      Send via WhatsApp
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {errorMessage && (
+                <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                  <p className="text-red-600 text-sm">{errorMessage}</p>
+                </div>
+              )}
+
               <div className="flex space-x-4 pt-4">
                 <button
                   type="button"
-                  onClick={() => setSelectedOption(null)}
+                  onClick={() => {
+                    setSelectedOption(null);
+                    setErrorMessage('');
+                  }}
                   className="flex-1 px-6 py-3 border-2 border-gray-300 rounded-full hover:bg-gray-50 transition-all duration-300 font-semibold"
+                  disabled={isSubmitting}
                 >
                   Back
                 </button>
@@ -306,29 +365,6 @@ export function FeedbackOptionsModal({ isOpen, onClose }: FeedbackOptionsModalPr
                 </button>
               </div>
             </form>
-          ) : selectedOption === 'whatsapp' ? (
-            <div className="text-center py-8">
-              <div className="w-20 h-20 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
-                <MessageCircle className="w-10 h-10 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">WhatsApp Feedback</h3>
-              <p className="text-gray-600 mb-8">We'll redirect you to WhatsApp where you can chat with us directly.</p>
-
-              <div className="flex space-x-4">
-                <button
-                  onClick={() => setSelectedOption(null)}
-                  className="flex-1 px-6 py-3 border-2 border-gray-300 rounded-full hover:bg-gray-50 transition-all duration-300 font-semibold"
-                >
-                  Back
-                </button>
-                <button
-                  onClick={handleWhatsAppFeedback}
-                  className="flex-1 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-full hover:from-green-600 hover:to-emerald-600 transition-all duration-300 font-semibold"
-                >
-                  Open WhatsApp
-                </button>
-              </div>
-            </div>
           ) : null}
         </div>
       </div>
