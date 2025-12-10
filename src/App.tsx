@@ -11,7 +11,6 @@ import { PropertyCarousel } from './components/PropertyCarousel';
 import { FilterPanel } from './components/FilterPanel';
 import { FloatingLabelInput, FloatingLabelTextarea } from './components/FloatingLabels';
 import { TestimonialSlider } from './components/TestimonialSlider';
-import { FeedbackModal } from './components/FeedbackModal';
 import { FeedbackViewer } from './components/FeedbackViewer';
 import { PropertyDetailModal } from './components/PropertyDetailModal';
 import { PropertyManagementModal } from './components/PropertyManagementModal';
@@ -21,7 +20,6 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeProperty, setActiveProperty] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const [isFeedbackViewerOpen, setIsFeedbackViewerOpen] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [isPropertyDetailOpen, setIsPropertyDetailOpen] = useState(false);
@@ -823,17 +821,25 @@ useEffect(() => {
         )}
 
         <button
-          onClick={() => setIsFeedbackOpen(true)}
-          className="bg-gradient-to-r from-amber-500 to-yellow-500 text-white p-4 rounded-full shadow-2xl hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 transform hover:scale-110 flex items-center space-x-2 group animate-zoom-in animate-bounce hover:animate-pulse"
+          onClick={handleWhatsAppInquiry}
+          className="bg-gradient-to-r from-green-500 to-green-600 text-white p-4 rounded-full shadow-2xl hover:from-green-600 hover:to-green-700 transition-all duration-300 transform hover:scale-110 flex items-center space-x-2 group animate-zoom-in"
           style={{ animationDelay: '1s' }}
+          title="WhatsApp Feedback"
         >
-          <Star className="w-6 h-6 fill-current" />
-          <span className="hidden group-hover:inline-block font-semibold pr-2">Feedback</span>
+          <MessageCircle className="w-6 h-6" />
+          <span className="hidden group-hover:inline-block font-semibold pr-2">WhatsApp</span>
+        </button>
+
+        <button
+          onClick={handleEmailInquiry}
+          className="bg-gradient-to-r from-amber-500 to-yellow-500 text-white p-4 rounded-full shadow-2xl hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 transform hover:scale-110 flex items-center space-x-2 group animate-zoom-in"
+          style={{ animationDelay: '1.2s' }}
+          title="Email Feedback"
+        >
+          <Mail className="w-6 h-6" />
+          <span className="hidden group-hover:inline-block font-semibold pr-2">Email</span>
         </button>
       </div>
-
-      {/* Feedback Modal */}
-      <FeedbackModal isOpen={isFeedbackOpen} onClose={() => setIsFeedbackOpen(false)} />
 
       {/* Feedback Viewer Modal */}
       <FeedbackViewer isOpen={isFeedbackViewerOpen} onClose={() => setIsFeedbackViewerOpen(false)} />
