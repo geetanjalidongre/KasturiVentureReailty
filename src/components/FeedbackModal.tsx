@@ -15,19 +15,23 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage('');
 
     if (rating === 0) {
       setSubmitStatus('error');
+      setErrorMessage('Please select a rating');
       return;
     }
 
     if (!name.trim() || !feedback.trim()) {
       setSubmitStatus('error');
+      setErrorMessage('Please fill in all required fields');
       return;
     }
 
@@ -49,6 +53,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
 
       console.log('Feedback submitted successfully:', result);
       setSubmitStatus('success');
+      setErrorMessage('');
       setTimeout(() => {
         setRating(0);
         setFeedback('');
@@ -61,6 +66,16 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
       console.error('Error submitting feedback:', error);
       console.error('Error details:', error.message, error.details, error.code);
       setSubmitStatus('error');
+
+      let errorMsg = 'Failed to submit feedback. ';
+      if (error.message) {
+        errorMsg += error.message;
+      } else if (error.code === 'PGRST301') {
+        errorMsg += 'Database permissions error. Please contact support.';
+      } else {
+        errorMsg += 'Please check your connection and try again.';
+      }
+      setErrorMessage(errorMsg);
     } finally {
       setIsSubmitting(false);
     }
@@ -156,9 +171,9 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
             </div>
           )}
 
-          {submitStatus === 'error' && rating > 0 && (
-            <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
-              Failed to submit feedback. Please check your internet connection and try again.
+          {submitStatus === 'error' && (
+            <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg text-sm">
+              {errorMessage || 'Please fill in all required fields'}
             </div>
           )}
 
