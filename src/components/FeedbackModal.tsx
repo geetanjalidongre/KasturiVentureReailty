@@ -26,16 +26,26 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
       return;
     }
 
+    if (!name.trim() || !feedback.trim()) {
+      setSubmitStatus('error');
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
     try {
-      const result = await feedbackService.submitFeedback({
-        name,
-        email: email || undefined,
+      const feedbackData: any = {
+        name: name.trim(),
         rating,
-        message: feedback
-      });
+        message: feedback.trim()
+      };
+
+      if (email.trim()) {
+        feedbackData.email = email.trim();
+      }
+
+      const result = await feedbackService.submitFeedback(feedbackData);
 
       console.log('Feedback submitted successfully:', result);
       setSubmitStatus('success');
@@ -49,7 +59,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
       }, 2000);
     } catch (error: any) {
       console.error('Error submitting feedback:', error);
-      console.error('Error details:', error.message, error.details);
+      console.error('Error details:', error.message, error.details, error.code);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
