@@ -20,17 +20,24 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (rating === 0) {
+      setSubmitStatus('error');
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
     try {
-      await feedbackService.submitFeedback({
+      const result = await feedbackService.submitFeedback({
         name,
-        email,
+        email: email || undefined,
         rating,
         message: feedback
       });
 
+      console.log('Feedback submitted successfully:', result);
       setSubmitStatus('success');
       setTimeout(() => {
         setRating(0);
@@ -40,8 +47,9 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
         setSubmitStatus('idle');
         onClose();
       }, 2000);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error submitting feedback:', error);
+      console.error('Error details:', error.message, error.details);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -91,7 +99,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              How would you rate your experience?
+              How would you rate your experience? <span className="text-red-500">*</span>
             </label>
             <div className="flex space-x-2">
               {[1, 2, 3, 4, 5].map((star) => (
@@ -113,6 +121,9 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
                 </button>
               ))}
             </div>
+            {rating === 0 && submitStatus === 'error' && (
+              <p className="text-red-500 text-sm mt-1">Please select a rating</p>
+            )}
           </div>
 
           <div>
@@ -135,9 +146,9 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
             </div>
           )}
 
-          {submitStatus === 'error' && (
+          {submitStatus === 'error' && rating > 0 && (
             <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
-              Failed to submit feedback. Please try again.
+              Failed to submit feedback. Please check your internet connection and try again.
             </div>
           )}
 
