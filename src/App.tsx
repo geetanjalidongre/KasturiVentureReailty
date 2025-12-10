@@ -11,8 +11,6 @@ import { PropertyCarousel } from './components/PropertyCarousel';
 import { FilterPanel } from './components/FilterPanel';
 import { FloatingLabelInput, FloatingLabelTextarea } from './components/FloatingLabels';
 import { TestimonialSlider } from './components/TestimonialSlider';
-import { FeedbackModal } from './components/FeedbackModal';
-import { FeedbackViewer } from './components/FeedbackViewer';
 import { PropertyDetailModal } from './components/PropertyDetailModal';
 import { PropertyManagementModal } from './components/PropertyManagementModal';
 import { emailEnquiryService, propertyService, Property } from './lib/supabase';
@@ -21,8 +19,6 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeProperty, setActiveProperty] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
-  const [isFeedbackViewerOpen, setIsFeedbackViewerOpen] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [isPropertyDetailOpen, setIsPropertyDetailOpen] = useState(false);
   const [isPropertyManagementOpen, setIsPropertyManagementOpen] = useState(false);
@@ -810,8 +806,8 @@ useEffect(() => {
       </footer>
 
       {/* Floating Action Buttons */}
-      <div className="fixed bottom-8 right-8 flex flex-col space-y-4 z-40">
-        {showManageButton && (
+      {showManageButton && (
+        <div className="fixed bottom-8 right-8 z-40">
           <button
             onClick={() => setIsPropertyManagementOpen(true)}
             className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white p-4 rounded-full shadow-2xl hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 transform hover:scale-110 flex items-center space-x-2 group animate-zoom-in"
@@ -820,23 +816,8 @@ useEffect(() => {
             <Settings className="w-6 h-6" />
             <span className="hidden group-hover:inline-block font-semibold pr-2">Manage</span>
           </button>
-        )}
-
-        <button
-          onClick={() => setIsFeedbackOpen(true)}
-          className="bg-gradient-to-r from-amber-500 to-yellow-500 text-white p-4 rounded-full shadow-2xl hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 transform hover:scale-110 flex items-center space-x-2 group animate-zoom-in animate-bounce hover:animate-pulse"
-          style={{ animationDelay: '1s' }}
-        >
-          <Star className="w-6 h-6 fill-current" />
-          <span className="hidden group-hover:inline-block font-semibold pr-2">Feedback</span>
-        </button>
-      </div>
-
-      {/* Feedback Modal */}
-      <FeedbackModal isOpen={isFeedbackOpen} onClose={() => setIsFeedbackOpen(false)} />
-
-      {/* Feedback Viewer Modal */}
-      <FeedbackViewer isOpen={isFeedbackViewerOpen} onClose={() => setIsFeedbackViewerOpen(false)} />
+        </div>
+      )}
 
       {/* Property Detail Modal */}
       <PropertyDetailModal
