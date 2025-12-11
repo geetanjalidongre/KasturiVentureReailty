@@ -13,6 +13,7 @@ import { FloatingLabelInput, FloatingLabelTextarea } from './components/Floating
 import { TestimonialSlider } from './components/TestimonialSlider';
 import { PropertyDetailModal } from './components/PropertyDetailModal';
 import { PropertyManagementModal } from './components/PropertyManagementModal';
+import { FeedbackForm } from './components/FeedbackForm';
 import { emailEnquiryService, propertyService, Property } from './lib/supabase';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
   const [isPropertyDetailOpen, setIsPropertyDetailOpen] = useState(false);
   const [isPropertyManagementOpen, setIsPropertyManagementOpen] = useState(false);
   const [showManageButton, setShowManageButton] = useState(false);
+  const [isFeedbackFormOpen, setIsFeedbackFormOpen] = useState(false);
   const [properties, setProperties] = useState<Property[]>([]);
   const [isLoadingProperties, setIsLoadingProperties] = useState(true);
   const [filters, setFilters] = useState({
@@ -806,8 +808,8 @@ useEffect(() => {
       </footer>
 
       {/* Floating Action Buttons */}
-      {showManageButton && (
-        <div className="fixed bottom-8 right-8 z-40">
+      <div className="fixed bottom-8 right-8 flex flex-col items-end space-y-4 z-40">
+        {showManageButton && (
           <button
             onClick={() => setIsPropertyManagementOpen(true)}
             className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white p-4 rounded-full shadow-2xl hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 transform hover:scale-110 flex items-center space-x-2 group animate-zoom-in"
@@ -816,8 +818,18 @@ useEffect(() => {
             <Settings className="w-6 h-6" />
             <span className="hidden group-hover:inline-block font-semibold pr-2">Manage</span>
           </button>
-        </div>
-      )}
+        )}
+
+        <button
+          onClick={() => setIsFeedbackFormOpen(true)}
+          className="bg-gradient-to-r from-amber-500 to-yellow-500 text-white p-4 rounded-full shadow-2xl hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 transform hover:scale-110 flex items-center space-x-2 group animate-zoom-in"
+          style={{ animationDelay: '1s' }}
+          title="Share Feedback"
+        >
+          <MessageCircle className="w-6 h-6" />
+          <span className="hidden group-hover:inline-block font-semibold pr-2">Feedback</span>
+        </button>
+      </div>
 
       {/* Property Detail Modal */}
       <PropertyDetailModal
@@ -834,6 +846,12 @@ useEffect(() => {
         isOpen={isPropertyManagementOpen}
         onClose={() => setIsPropertyManagementOpen(false)}
         onPropertyChange={loadProperties}
+      />
+
+      {/* Feedback Form */}
+      <FeedbackForm
+        isOpen={isFeedbackFormOpen}
+        onClose={() => setIsFeedbackFormOpen(false)}
       />
     </div>
   );
